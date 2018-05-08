@@ -1609,7 +1609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff9cff77357547a49a56aa757617eb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMoveType: 1
+  currentMoveType: 0
   turn: 0
   moving: 0
   moveSpeed: 10
@@ -2727,7 +2727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff9cff77357547a49a56aa757617eb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMoveType: 1
+  currentMoveType: 0
   turn: 0
   moving: 0
   moveSpeed: 10
