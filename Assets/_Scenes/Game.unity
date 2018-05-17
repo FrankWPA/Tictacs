@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641258, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1616,6 +1616,7 @@ MonoBehaviour:
   moveDistance: 7
   currentTile: {fileID: 0}
   pathList: []
+  actualTargetTile: {fileID: 0}
 --- !u!23 &1257480915
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2739,7 +2740,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1881356854}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff9cff77357547a49a56aa757617eb58, type: 3}
   m_Name: 
@@ -2751,6 +2752,7 @@ MonoBehaviour:
   moveDistance: 7
   currentTile: {fileID: 0}
   pathList: []
+  actualTargetTile: {fileID: 0}
 --- !u!23 &1881356856
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2825,7 +2827,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1881356854}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c74d07bcd8cc16944b1a454193710351, type: 3}
   m_Name: 
@@ -2834,9 +2836,10 @@ MonoBehaviour:
   turn: 0
   moving: 0
   moveSpeed: 10
-  moveDistance: 7
+  moveDistance: 5
   currentTile: {fileID: 0}
   pathList: []
+  actualTargetTile: {fileID: 0}
 --- !u!1001 &1943253001
 Prefab:
   m_ObjectHideFlags: 0
