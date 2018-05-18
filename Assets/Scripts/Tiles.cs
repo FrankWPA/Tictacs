@@ -46,9 +46,9 @@ public class Tiles : MonoBehaviour
         }
     }
 
-    public void CheckNeighbours(GameObject checker, float halfHeight, Tiles targetC)
+	public void CheckNeighbours(GameObject checker, float halfHeight, Tiles targetC, int ResetAll)
     { 
-        Reset();
+		Reset(ResetAll);
         CheckTile(Vector3.forward, checker, halfHeight, targetC);
         CheckTile(-Vector3.forward, checker, halfHeight, targetC);
         CheckTile(Vector3.left, checker, halfHeight, targetC);
@@ -69,7 +69,7 @@ public class Tiles : MonoBehaviour
                 {
                     RaycastHit hit;
                     Physics.Raycast(tile.transform.position, Vector3.up, out hit, halfHeight * 2);
-                    if (hit.collider == null || tile == targetC)
+					if (hit.collider == null || tile == targetC)
                     {
                         adjacencyList.Add(tile);
                     }
@@ -78,17 +78,38 @@ public class Tiles : MonoBehaviour
         }
     }
 
-    public void Reset()
+	public void Reset(int mode)
     {
-        adjacencyList.Clear();
-        path = false;
-        current = false;
-        target = false;
-        selectable = false;
-        visited = false;
-        parent = null;
-        distance = 0;
+		switch (mode){
+		case 0:
+			distance = 0;
+			adjacencyList.Clear ();
+			visited = false;
+			parent = null;
+			break;
 
-        f = g = h = 0;
+		case 1:
+			path = false;
+			adjacencyList.Clear ();
+			current = false;
+			target = false;
+			selectable = false;
+			visited = false;
+			parent = null;
+			distance = 0;
+			f = g = h = 0;
+			break;
+
+		case 2:
+			adjacencyList.Clear ();
+			current = false;
+			target = false;
+			selectable = false;
+			visited = false;
+			parent = null;
+			distance = 0;
+			f = g = h = 0;
+			break;
+		}
     }
 }

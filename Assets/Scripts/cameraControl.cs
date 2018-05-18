@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cameraControl : MonoBehaviour {
+public class CameraControl : MonoBehaviour {
 
     [Range(0.1f, 10f)]
     public float panSpeed = 1f;
@@ -16,6 +16,9 @@ public class cameraControl : MonoBehaviour {
     public float minZoom = 10f;
     public float maxZoom = 60f;
 
+	public bool borderPan = true;
+	public bool invertZoom = false;
+
     float panDist = 10f;
     float panSpeedModifier = 0.5f;
 
@@ -28,7 +31,7 @@ public class cameraControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (Input.GetKeyDown(KeyCode.Escape)) borderPan = !borderPan;
         panCamera();
         rotateCamera();
         zoomCamera();
@@ -38,16 +41,21 @@ public class cameraControl : MonoBehaviour {
     {
         Vector2 inputDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        if (Input.mousePosition.x < panDist) inputDir.x -= panSpeed * panSpeedModifier;
-        if (Input.mousePosition.x > Screen.width - panDist) inputDir.x += panSpeed * panSpeedModifier;
-        if (Input.mousePosition.y < panDist) inputDir.y -= panSpeed * panSpeedModifier;
-        if (Input.mousePosition.y > Screen.height - panDist) inputDir.y += panSpeed * panSpeedModifier;
+		if (borderPan) {
+			if (Input.mousePosition.x < panDist)
+				inputDir.x -= panSpeed * panSpeedModifier;
+			if (Input.mousePosition.x > Screen.width - panDist)
+				inputDir.x += panSpeed * panSpeedModifier;
+			if (Input.mousePosition.y < panDist)
+				inputDir.y -= panSpeed * panSpeedModifier;
+			if (Input.mousePosition.y > Screen.height - panDist)
+				inputDir.y += panSpeed * panSpeedModifier;
+		}
 
         var forward = cam.transform.forward;
         var right = cam.transform.right;
 
         forward.y = right.y = 0f;
-        right.y = right.y = 0f;
 
         forward.Normalize();
         right.Normalize();
@@ -73,7 +81,7 @@ public class cameraControl : MonoBehaviour {
 
     void zoomCamera()
     {
-        cam.fieldOfView += Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * 10f;
+		cam.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * 10f * (invertZoom ? -1 : 1);
         cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, minZoom, maxZoom);
     }
 }
