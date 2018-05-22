@@ -12,6 +12,7 @@ public class PlayerMove : TacticsMove
     void Start()
     {
         Init();
+		moveDistance = this.GetComponent<PlayerCharacter> ().movement;
         layerMask = 1 << 8;
         //layerMask = ~layerMask;
     }
@@ -89,17 +90,17 @@ public class PlayerMove : TacticsMove
             {
                 if (hit.collider.tag == "Tile")
                 {
+					Tiles t = hit.collider.GetComponent<Tiles>();
+
                     if (!currentTile.path)
                     {
                         currentTile.path = true;
                         pathList.Add(currentTile);
-						Debug.Log ("1");
+						Debug.Log("1");
                     }
 
-                    Tiles t = hit.collider.GetComponent<Tiles>();
-
 					dist = ((pathList[pathList.Count - 1].transform.position - t.transform.position));
-
+						
 					if (!t.adjacencyList.Contains (t.parent)) {
 						t.adjacencyList.Add (t.parent);
 					}
@@ -136,8 +137,7 @@ public class PlayerMove : TacticsMove
 											pathList [pathList.Count - 1].path = false;
 											pathList.RemoveAt (pathList.Count - 1);
 										}
-									} else if (scannedTile.selectable) {
-										//scannedTile.path = true;
+									} else {
 										pathList.Add (scannedTile);
 										Debug.Log("3");
 									}
@@ -176,7 +176,8 @@ public class PlayerMove : TacticsMove
                 MoveToTile(pathList);
             }
         }
-		if ((Input.GetMouseButtonUp (1) && pathList.Count > 0) && makingPath) {
+		if ((((Input.GetMouseButtonUp (1)  && pathList.Count > 0) || (Input.GetMouseButtonUp (0) && pathList.Count == 1)) && makingPath)) {
+			Debug.Log ("Canceling");
 			foreach (Tiles tile in pathList) {
 				tile.path = false;
 			}
@@ -202,8 +203,7 @@ public class PlayerMove : TacticsMove
 			t = path.Peek();
 			if (t.path)
 				goto end2;
-			if (t.distance <= (moveDistance - (pathList.Count - 1)) && t.selectable) {
-				//t.path = true;
+			else if (t.selectable) {
 				pathList.Add (t);
 				Debug.Log("4");
 			}
