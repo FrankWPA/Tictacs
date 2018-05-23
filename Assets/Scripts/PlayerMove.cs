@@ -105,7 +105,7 @@ public class PlayerMove : TacticsMove
 						t.adjacencyList.Add (t.parent);
 					}
 
-					if (pathList.Count < (moveDistance + 1) && t.selectable && !t.path && !t.current && (t.adjacencyList.Contains (pathList [pathList.Count - 1]))) {
+					if (pathList.Count < ((moveDistance - distanceMoved) + 1) && t.selectable && !t.path && !t.current && (t.adjacencyList.Contains (pathList [pathList.Count - 1]))) {
 						//t.path = true;
 						pathList.Add (t);
 						Debug.Log("2");
@@ -127,7 +127,7 @@ public class PlayerMove : TacticsMove
 								goto end;
 							}
 							RaycastHit scanner;
-							Physics.Raycast (lastPath - new Vector3 (0, halfHeight*2, 0) - (dist.normalized * i), Vector3.up, out scanner, Mathf.Infinity, layerMask);
+							Physics.Raycast (lastPath - new Vector3 (0, halfHeight*2, 0) - (dist.normalized * i), Vector3.up, out scanner, halfHeight*2, layerMask);
 							if (scanner.collider != null) {
 								Tiles scannedTile = scanner.collider.GetComponent<Tiles> ();
 								if (scannedTile.selectable) {
@@ -149,13 +149,13 @@ public class PlayerMove : TacticsMove
 							}
 						}
 						end:
-						while (pathList.Count - 1 > moveDistance) {
+						while (pathList.Count - 1 > (moveDistance - distanceMoved)) {
 							pathList [pathList.Count - 1].path = false;
 							pathList.RemoveAt (pathList.Count - 1);
 							Debug.Log("-3");
 						}
 
-					} else if (!t.path && pathList.Count < moveDistance) {
+					} else if (!t.path && pathList.Count < (moveDistance - distanceMoved)) {
 						PathToTile (t);
 					}
                 }
@@ -176,7 +176,7 @@ public class PlayerMove : TacticsMove
                 MoveToTile(pathList);
             }
         }
-		if ((((Input.GetMouseButtonUp (1)  && pathList.Count > 0) || (Input.GetMouseButtonUp (0) && pathList.Count == 1)) && makingPath)) {
+		if ((((Input.GetMouseButtonUp (1)  && pathList.Count > 0) || (Input.GetMouseButtonUp (0) && pathList.Count <= 1)) && makingPath)) {
 			Debug.Log ("Canceling");
 			foreach (Tiles tile in pathList) {
 				tile.path = false;
