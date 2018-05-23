@@ -9,6 +9,7 @@ public class NpcMove : TacticsMove
     void Start()
     {
         Init();
+		moveDistance = this.GetComponent<EnemyCharacter> ().movement;
     }
 
     void Update()
