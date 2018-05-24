@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
@@ -77,4 +78,8 @@ public class TurnManager : MonoBehaviour
         }
         list.Add(unit);
     }
+
+	public void EndTurnButton(){
+		EndTurn ();
+	}
 }

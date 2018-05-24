@@ -11,15 +11,16 @@ public class Character : MonoBehaviour {
 
 	private Damage lastDamage;
 
-	private string[] allTriggers = {
-		"atk_onAttackTriggers",
-		"atk_onHitTriggers",
-		"atk_onConnectTriggers",
-		"atk_onBlockTriggers",
-		"atk_onArmourTriggers",
-		"atk_onDamageTriggers",
-		"atk_onCritTriggers",
-		"atk_onDodgeTriggers"
+	private string[] atk_Triggers = {
+		"atk_attackTrigger",
+		"atk_hitTrigger",
+		"atk_connectTrigger",
+		"atk_blockTrigger",
+		"atk_armourTrigger",
+		"atk_damageTrigger",
+		"atk_critTrigger",
+		"atk_dodgeTrigger",
+		"atk_killTrigger"
 	};
 
 	[Header("Basic Stats")]
@@ -53,8 +54,8 @@ public class Character : MonoBehaviour {
 	public void Start()
 	{
 		// Adding Triggers
-		AddToList (atk_TriggerList, "atk_onBlockTriggers", new object[] {"Critical"});
-		AddToList (atk_TriggerList, "atk_onCritTriggers", new object[] {"Poison", 2});
+		AddToList (atk_TriggerList, "atk_blockTrigger", new object[] {"Critical"});
+		//AddToList (atk_TriggerList, "atk_critTrigger", new object[] {"Poison", 2});
 	}
 
 	private void AddToList (List<List<object[]>> list, string triggerList, object[] trigger){
@@ -88,7 +89,7 @@ public class Character : MonoBehaviour {
 			atk_TriggerList = this.atk_TriggerList,
 		};
 
-		character.TakeDamage (newDamage);
+		Debug.Log ("Final Damage: " + character.TakeDamage (newDamage).damage);
 	}
 
 	public Damage TakeDamage(Damage newDamage)
@@ -96,8 +97,8 @@ public class Character : MonoBehaviour {
 		lastDamage = newDamage;
 		// Returns the ammount of damage taken
 
-		//On Attack - atk_onAttackTriggers
-		EventTrigger(lastDamage.atk_TriggerList,"atk_onAttackTriggers");
+		//On Attack - atk_attackTrigger
+		EventTrigger(lastDamage.atk_TriggerList,"atk_attackTrigger");
 
 		if (lastDamage.canBeDodged && currentDodge > 0)
 		{
@@ -106,41 +107,43 @@ public class Character : MonoBehaviour {
 			return lastDamage;
 		}
 
-		// On Hit - atk_onHitTriggers
-		EventTrigger(lastDamage.atk_TriggerList, "atk_onHitTriggers");
+		// On Hit - atk_hitTrigger
+		EventTrigger(lastDamage.atk_TriggerList, "atk_hitTrigger");
 
 		if (lastDamage.canBeBlocked && currentBlock > 0)
 		{
-			// On Block - atk_onBlockTriggers
-			EventTrigger(lastDamage.atk_TriggerList, "atk_onBlockTriggers");
+			// On Block - atk_blockTrigger
+			EventTrigger(lastDamage.atk_TriggerList, "atk_blockTrigger");
 
 			lastDamage.damage -= BlockAttack();
 		}
 
 		if (lastDamage.damage > 0)
 		{
-			// On Connect - atk_onConnectTriggers
-			EventTrigger(lastDamage.atk_TriggerList, "atk_onConnectTriggers");
+			// On Connect - atk_connectTrigger
+			EventTrigger(lastDamage.atk_TriggerList, "atk_connectTrigger");
 
 			if (armour > lastDamage.armourPierce)
 			{
-				lastDamage.damage -= (Mathf.Max (armour - armourPierce, 0));
+				lastDamage.damage -= armour - lastDamage.armourPierce;
 
-				// On Armour - atk_onArmourTriggers
-				EventTrigger(lastDamage.atk_TriggerList, "atk_onArmourTriggers");
+				// On Armour - atk_armourTrigger
+				EventTrigger(lastDamage.atk_TriggerList, "atk_armourTrigger");
 			}
 
 			if (lastDamage.damage > 0)
 			{
-				
-				// On Damage - atk_onDamageTriggers
-				EventTrigger(lastDamage.atk_TriggerList, "atk_onDamageTriggers");
+				// On Damage - atk_damageTrigger
+				EventTrigger(lastDamage.atk_TriggerList, "atk_damageTrigger");
 			}
 
-			currentHp -= lastDamage.damage;
+			currentHp -= Mathf.Max(lastDamage.damage, 0);
 
-			if (hp <= 0)
-				Death();
+			if (currentHp <= 0) {
+				// On Killing - atk_killTrigger
+				EventTrigger(lastDamage.atk_TriggerList, "atk_killTrigger");
+				Death ();
+			}
 
 			return lastDamage;
 		}
@@ -152,35 +155,25 @@ public class Character : MonoBehaviour {
 
 	int BlockAttack()
 	{
+		int blockedDamage = Mathf.Min (currentBlock, lastDamage.damage);
 
-		int damageBlocked = 0;
-
-		if (currentBlock > lastDamage.damage)
-		{
-			damageBlocked = lastDamage.damage;
-			currentBlock -= lastDamage.damage;
-		}
-		else
-		{
-			damageBlocked = currentBlock;
-			currentBlock = 0;
-		}
+		currentBlock -= blockedDamage;
 
 		// Returns the ammount of damage blocked
-		return damageBlocked;
+		return blockedDamage;
 	}
 
 	void DodgeAttack()
 	{
 		currentDodge--;
 
-		// On Dodge - atk_onDodgeTriggers
-		EventTrigger(lastDamage.atk_TriggerList, "atk_onDodgeTriggers");
+		// On Dodge - atk_dodgeTrigger
+		EventTrigger(lastDamage.atk_TriggerList, "atk_dodgeTrigger");
 	}
 
 	void Death()
 	{
-		Debug.Log (name + " died. RIP in peace.");
+		//Debug.Log (name + " died. RIP in peace.");
 	}
 
 	public void Critical()
@@ -190,8 +183,8 @@ public class Character : MonoBehaviour {
 			lastDamage.damage *= lastDamage.critModifier;
 			lastDamage.hasCrited = true;
 
-			// On Crit
-			EventTrigger (lastDamage.atk_TriggerList, "atk_onCritTriggers");
+			// On Crit - atk_critTrigger
+			EventTrigger (lastDamage.atk_TriggerList, "atk_critTrigger");
 		}
 	}
 

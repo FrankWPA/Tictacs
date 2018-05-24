@@ -6,7 +6,6 @@ public class PlayerMove : TacticsMove
 {
     public bool makingPath = false;
     int layerMask;
-    bool TilesChecked = false;
 	public Vector3 dist;
 
     void Start()
@@ -159,7 +158,7 @@ public class PlayerMove : TacticsMove
                 {
                     makingPath = true;
                 }
-                if (Input.GetMouseButtonUp(0))
+                if (Input.GetMouseButtonDown(0))
                 {
                     makingPath = false;
                 }
