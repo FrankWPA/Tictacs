@@ -1,26 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Reflection;
+using System.Reflection;      
 
 public class Character : MonoBehaviour {
-
-	// Event Triggers
-	private List<object[]> atk_onAttackTriggers = new List<object[]>();
-	private List<object[]> atk_onHitTriggers = new List<object[]>();
-	private List<object[]> atk_onConnectTriggers = new List<object[]>();
-	private List<object[]> atk_onBlockTriggers = new List<object[]>();
-	private List<object[]> atk_onArmorTriggers = new List<object[]>();
-	private List<object[]> atk_onDamageTriggers = new List<object[]>();
-
-	private List<object[]> atk_onCritTriggers = new List<object[]>();
-	private List<object[]> atk_onDodgeTriggers = new List<object[]>();
 
 	// Lists
 	private List<List<object[]>> atk_TriggerList = new List<List<object[]>>();
 	public List<StatusEffect> statusEffect = new List<StatusEffect>();
 
 	private Damage lastDamage;
+
+	private string[] allTriggers = {
+		"atk_onAttackTriggers",
+		"atk_onHitTriggers",
+		"atk_onConnectTriggers",
+		"atk_onBlockTriggers",
+		"atk_onArmourTriggers",
+		"atk_onDamageTriggers",
+		"atk_onCritTriggers",
+		"atk_onDodgeTriggers"
+	};
 
 	[Header("Basic Stats")]
 	public new string name = "Error";
@@ -50,32 +50,23 @@ public class Character : MonoBehaviour {
 	//public int dodge = 0;
 	public int currentDodge = 0;
 
-
 	public void Start()
 	{
-		// Preparation
-		atk_onAttackTriggers.Add(new object[] {"atk_onAttackTriggers"});;
-		atk_onHitTriggers.Add(new object[] {"atk_onHitTriggers"});
-		atk_onConnectTriggers.Add(new object[] {"atk_onConnectTriggers"});
-		atk_onBlockTriggers.Add(new object[] {"atk_onBlockTriggers"});
-		atk_onArmorTriggers.Add(new object[] {"atk_onArmorTriggers"});
-		atk_onDamageTriggers.Add(new object[] {"atk_onDamageTriggers"});
-		atk_onCritTriggers.Add(new object[] {"atk_onCritTriggers"});
-		atk_onDodgeTriggers.Add (new object[] {"atk_onDodgeTriggers"});
-
 		// Adding Triggers
-		atk_onBlockTriggers.Add(new object[] {"Critical"});
-		//atk_onCritTriggers.Add(new object[] {"Poison", 2});
+		AddToList (atk_TriggerList, "atk_onBlockTriggers", new object[] {"Critical"});
+		AddToList (atk_TriggerList, "atk_onCritTriggers", new object[] {"Poison", 2});
+	}
 
-		// Updating List of Triggers
-		atk_TriggerList.Add(atk_onAttackTriggers);
-		atk_TriggerList.Add(atk_onHitTriggers);
-		atk_TriggerList.Add(atk_onConnectTriggers);
-		atk_TriggerList.Add(atk_onBlockTriggers);
-		atk_TriggerList.Add(atk_onArmorTriggers);
-		atk_TriggerList.Add(atk_onDamageTriggers);
-		atk_TriggerList.Add(atk_onCritTriggers);
-		atk_TriggerList.Add(atk_onDodgeTriggers);
+	private void AddToList (List<List<object[]>> list, string triggerList, object[] trigger){
+		foreach (List<object[]> tL in list) {
+			if ((string) tL [0] [0] == triggerList) {
+				tL.Add (trigger);
+				return;
+			}
+		}
+		//Debug.Log ("Creating new Trigger " + triggerList);
+		list.Add (new List<object[]> { new object[] {triggerList}});
+		AddToList (list, triggerList, trigger);
 	}
 
 	public void Update(){
@@ -97,7 +88,7 @@ public class Character : MonoBehaviour {
 			atk_TriggerList = this.atk_TriggerList,
 		};
 
-		Debug.Log("Final Damage: " + character.TakeDamage(newDamage).damage);
+		character.TakeDamage (newDamage);
 	}
 
 	public Damage TakeDamage(Damage newDamage)
@@ -106,7 +97,7 @@ public class Character : MonoBehaviour {
 		// Returns the ammount of damage taken
 
 		//On Attack - atk_onAttackTriggers
-		EventTriggers(lastDamage.atk_TriggerList,"atk_onAttackTriggers");
+		EventTrigger(lastDamage.atk_TriggerList,"atk_onAttackTriggers");
 
 		if (lastDamage.canBeDodged && currentDodge > 0)
 		{
@@ -116,12 +107,12 @@ public class Character : MonoBehaviour {
 		}
 
 		// On Hit - atk_onHitTriggers
-		EventTriggers(lastDamage.atk_TriggerList, "atk_onHitTriggers");
+		EventTrigger(lastDamage.atk_TriggerList, "atk_onHitTriggers");
 
 		if (lastDamage.canBeBlocked && currentBlock > 0)
 		{
 			// On Block - atk_onBlockTriggers
-			EventTriggers(lastDamage.atk_TriggerList, "atk_onBlockTriggers");
+			EventTrigger(lastDamage.atk_TriggerList, "atk_onBlockTriggers");
 
 			lastDamage.damage -= BlockAttack();
 		}
@@ -129,25 +120,24 @@ public class Character : MonoBehaviour {
 		if (lastDamage.damage > 0)
 		{
 			// On Connect - atk_onConnectTriggers
-			EventTriggers(lastDamage.atk_TriggerList, "atk_onConnectTriggers");
+			EventTrigger(lastDamage.atk_TriggerList, "atk_onConnectTriggers");
 
 			if (armour > lastDamage.armourPierce)
 			{
-				lastDamage.damage -= (armour - armourPierce);
-				if (lastDamage.damage < 0)
-					lastDamage.damage = 0;
-				// On Armour - atk_onArmorTriggers
-				EventTriggers(lastDamage.atk_TriggerList, "atk_onArmorTriggers");
+				lastDamage.damage -= (Mathf.Max (armour - armourPierce, 0));
+
+				// On Armour - atk_onArmourTriggers
+				EventTrigger(lastDamage.atk_TriggerList, "atk_onArmourTriggers");
 			}
 
 			if (lastDamage.damage > 0)
 			{
 				
 				// On Damage - atk_onDamageTriggers
-				EventTriggers(lastDamage.atk_TriggerList, "atk_onDamageTriggers");
+				EventTrigger(lastDamage.atk_TriggerList, "atk_onDamageTriggers");
 			}
 
-			hp -= lastDamage.damage;
+			currentHp -= lastDamage.damage;
 
 			if (hp <= 0)
 				Death();
@@ -185,7 +175,12 @@ public class Character : MonoBehaviour {
 		currentDodge--;
 
 		// On Dodge - atk_onDodgeTriggers
-		EventTriggers(lastDamage.atk_TriggerList, "atk_onDodgeTriggers");
+		EventTrigger(lastDamage.atk_TriggerList, "atk_onDodgeTriggers");
+	}
+
+	void Death()
+	{
+		Debug.Log (name + " died. RIP in peace.");
 	}
 
 	public void Critical()
@@ -196,7 +191,7 @@ public class Character : MonoBehaviour {
 			lastDamage.hasCrited = true;
 
 			// On Crit
-			EventTriggers (lastDamage.atk_TriggerList, "atk_onCritTriggers");
+			EventTrigger (lastDamage.atk_TriggerList, "atk_onCritTriggers");
 		}
 	}
 
@@ -208,12 +203,7 @@ public class Character : MonoBehaviour {
 		}
 	}
 
-	void Death()
-	{
-		Debug.Log (name + " died. RIP in peace.");
-	}
-
-	void EventTriggers(List<List<object[]>> eventListList, string eventName)
+	void EventTrigger(List<List<object[]>> eventListList, string eventName)
 	{
 		foreach (List<object[]> eventList in eventListList)
 		{
@@ -223,22 +213,20 @@ public class Character : MonoBehaviour {
 					for (int i = 1; i < eventList[a].Length; i++) {
 						arguments [i - 1] = eventList[a] [i];
 					}
-
-					//Debug.Log ("Trying to invoke " + (string)eventList[a][0]);
-					InvokeStringMethod2 ((string)eventList[a][0], arguments);
+					InvokeStringMethod ((string)eventList[a][0], arguments);
 				}
 
 			}
 		}
 	}
 
-	public void InvokeStringMethod2 (string methodName, object[] args)
+	public void InvokeStringMethod (string methodName, object[] args)
 	{
 		MethodInfo methodInfo = typeof(PlayerCharacter).GetMethod (methodName);
 		methodInfo.Invoke(this, args);
 	}
 
-	public int VarParser(string variable)
+	public object VarParser(string variable)
 	{
 		switch (variable)
 		{

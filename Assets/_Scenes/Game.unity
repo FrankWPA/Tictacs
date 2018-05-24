@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,8 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641222, b: 0.57481694, a: 1}
-  m_UseRadianceAmbientProbe: 0
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -55,10 +54,11 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
-    m_AtlasSize: 1024
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -77,18 +77,15 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFilterTypeDirect: 0
-    m_PVRFilterTypeIndirect: 0
-    m_PVRFilterTypeAO: 0
+    m_PVRFiltering: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
-    m_PVRFilteringAtrousPositionSigmaIndirect: 2
-    m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
+    m_PVRFilteringAtrousColorSigma: 1
+    m_PVRFilteringAtrousNormalSigma: 1
+    m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -110,8 +107,6 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
-    debug:
-      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &365890
 GameObject:
@@ -132,7 +127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &365891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,18 +141,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "Per\xE1grajo"
   hp: 5
+  currentHp: 5
   movement: 7
   Str: 3
   Int: 2
   Agi: 1
   Des: 2
   baseDamage: 1
-  armourPierce: 0
   critModifier: 2
-  block: 0
-  blockRegen: 0
-  dodge: 0
+  armourPierce: 0
   armour: 0
+  currentBlock: 0
+  blockRegen: 0
+  currentDodge: 0
   classToApply: 7
 --- !u!114 &365892
 MonoBehaviour:
@@ -191,11 +187,9 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 1d84c7cc4e565e74ca2267902ed3d08e, type: 2}
   m_StaticBatchInfo:
@@ -208,7 +202,6 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -2008,18 +2001,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Zombie
   hp: 5
+  currentHp: 5
   movement: 3
   Str: 1
   Int: 0
   Agi: 0
   Des: 0
   baseDamage: 1
-  armourPierce: 0
   critModifier: 2
-  block: 0
-  blockRegen: 0
-  dodge: 0
+  armourPierce: 0
   armour: 0
+  currentBlock: 0
+  blockRegen: 0
+  currentDodge: 0
   enemyPressetToApply: 1
 --- !u!114 &341484310
 MonoBehaviour:
@@ -2051,11 +2045,9 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: d87576b60f597c94f997926c80f07909, type: 2}
   m_StaticBatchInfo:
@@ -2068,7 +2060,6 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -4459,7 +4450,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 25.8
+  field of view: 46
   orthographic: 0
   orthographic size: 3.45
   m_Depth: -1
@@ -4472,11 +4463,11 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
 --- !u!4 &744454977 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4714517285375072, guid: f042bc72b3359a247abb7126abee8212,
@@ -8255,11 +8246,9 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 1d84c7cc4e565e74ca2267902ed3d08e, type: 2}
   m_StaticBatchInfo:
@@ -8272,7 +8261,6 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -8327,18 +8315,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "Per\xE1grajo"
   hp: 5
-  movement: 7
+  currentHp: 5
+  movement: 4
   Str: 3
   Int: 2
   Agi: 1
   Des: 2
-  baseDamage: 1
-  armourPierce: 0
-  critModifier: 2
-  block: 0
+  baseDamage: 2
+  critModifier: 3
+  armourPierce: 1
+  armour: 2
+  currentBlock: 8
   blockRegen: 0
-  dodge: 0
-  armour: 0
+  currentDodge: 1
   classToApply: 7
 --- !u!1001 &1258404175
 Prefab:
@@ -9480,7 +9469,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1408172006}
   m_LocalRotation: {x: -0, y: -0.92387956, z: -0, w: 0.38268343}
-  m_LocalPosition: {x: 12.7, y: 1.5, z: -4.27}
+  m_LocalPosition: {x: -0.87, y: 1.5, z: 8.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 737141236}
@@ -10303,11 +10292,9 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -10320,7 +10307,6 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -12463,11 +12449,9 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: d87576b60f597c94f997926c80f07909, type: 2}
   m_StaticBatchInfo:
@@ -12480,7 +12464,6 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -12556,18 +12539,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Zombie
   hp: 5
+  currentHp: 5
   movement: 3
   Str: 1
   Int: 0
   Agi: 0
   Des: 0
   baseDamage: 1
-  armourPierce: 0
   critModifier: 2
-  block: 0
-  blockRegen: 0
-  dodge: 0
+  armourPierce: 0
   armour: 0
+  currentBlock: 0
+  blockRegen: 0
+  currentDodge: 0
   enemyPressetToApply: 1
 --- !u!1001 &1885379003
 Prefab:
