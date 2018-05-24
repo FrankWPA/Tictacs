@@ -14,4 +14,5 @@ public class Damage
     public bool canBeDodged;
     public bool canBeBlocked;
 
+	public bool hasCrited = false;
 }
