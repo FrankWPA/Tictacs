@@ -64,8 +64,9 @@ public class Tiles : MonoBehaviour
 
             if (tile != null && tile.walkable)
             {
-                float diference = (tile.transform.position.y + tile.transform.localScale.y / 2 - transform.position.y - transform.localScale.y / 2);
-                if (diference <= 1 && diference >= -2)
+                //float diference = (tile.transform.position.y + tile.transform.localScale.y / 2 - transform.position.y - transform.localScale.y / 2);
+                float diference = (tile.transform.position.y - transform.position.y);
+                if (diference >= -1 && diference <= 1)
                 {
                     RaycastHit hit;
                     Physics.Raycast(tile.transform.position, Vector3.up, out hit, halfHeight * 2);

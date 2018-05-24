@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : TacticsMove
 {
-    bool makingPath = false;
+    public bool makingPath = false;
     int layerMask;
     bool TilesChecked = false;
 	public Vector3 dist;
@@ -100,10 +100,6 @@ public class PlayerMove : TacticsMove
                     }
 
 					dist = ((pathList[pathList.Count - 1].transform.position - t.transform.position));
-						
-					if (!t.adjacencyList.Contains (t.parent)) {
-						t.adjacencyList.Add (t.parent);
-					}
 
 					if (pathList.Count < ((moveDistance - distanceMoved) + 1) && t.selectable && !t.path && !t.current && (t.adjacencyList.Contains (pathList [pathList.Count - 1]))) {
 						//t.path = true;
@@ -163,7 +159,7 @@ public class PlayerMove : TacticsMove
                 {
                     makingPath = true;
                 }
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonUp(0))
                 {
                     makingPath = false;
                 }
@@ -175,15 +171,18 @@ public class PlayerMove : TacticsMove
             {
                 MoveToTile(pathList);
             }
+
+            if ((((Input.GetMouseButtonUp(1) && pathList.Count > 0) || (Input.GetMouseButtonUp(0) && pathList.Count <= 1)) && makingPath))
+            {
+                Debug.Log("Canceling");
+                foreach (Tiles tile in pathList)
+                {
+                    tile.path = false;
+                }
+                pathList.Clear();
+                makingPath = false;
+            }
         }
-		if ((((Input.GetMouseButtonUp (1)  && pathList.Count > 0) || (Input.GetMouseButtonUp (0) && pathList.Count <= 1)) && makingPath)) {
-			Debug.Log ("Canceling");
-			foreach (Tiles tile in pathList) {
-				tile.path = false;
-			}
-			pathList.Clear ();
-			makingPath = false;
-		}
     }
 
 	void PathToTile(Tiles t){
@@ -201,13 +200,14 @@ public class PlayerMove : TacticsMove
 		path.Pop();
 		while (path.Count > 0){
 			t = path.Peek();
-			if (t.path)
+
+            if (t.path)
 				goto end2;
-			else if (t.selectable) {
-				pathList.Add (t);
+			else if (t.selectable && (t.adjacencyList.Contains(pathList[pathList.Count - 1]))) {
+                pathList.Add (t);
 				Debug.Log("4");
 			}
-			path.Pop();
+            path.Pop();
 		}
 		end2:
 		FindSelectableTiles (2);
