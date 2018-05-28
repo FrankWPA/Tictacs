@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,7 +38,8 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -77,15 +77,18 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFiltering: 0
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousColorSigma: 1
-    m_PVRFilteringAtrousNormalSigma: 1
-    m_PVRFilteringAtrousPositionSigma: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -107,6 +110,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    debug:
+      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1001 &5540270
 Prefab:
@@ -1063,7 +1068,82 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1768354425580480, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: DamageTarget
+      value: 
+      objectReference: {fileID: 988287760}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: armourPierce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: currentBlock
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: name
+      value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: currentHp
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: Int
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: Agi
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: Des
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: baseDamage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: critModifier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: enemyPressetToApply
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: armour
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: currentDodge
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: movement
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114543192112472866, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &335662118 stripped
@@ -2265,11 +2345,11 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!1001 &752183087
 Prefab:
   m_ObjectHideFlags: 0
@@ -3342,6 +3422,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f042bc72b3359a247abb7126abee8212, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &988287760 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+    type: 2}
+  m_PrefabInternal: {fileID: 1502139733}
+  m_Script: {fileID: 11500000, guid: 52f3fc1ec5556db469e3b14b9758a054, type: 3}
 --- !u!4 &990026675 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4714517285375072, guid: f042bc72b3359a247abb7126abee8212,
@@ -4823,9 +4909,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebb8f000aff95245b687c32788ff1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panSpeed: 0.5
-  rotateSpeed: 2.5
-  zoomSpeed: 3.6
+  panSpeed: 1
+  rotateSpeed: 1
+  zoomSpeed: 1
   minZoom: 10
   maxZoom: 60
   borderPan: 0
@@ -5021,6 +5107,76 @@ Prefab:
     - target: {fileID: 4467693903672728, guid: b59c0f3c73214f84ab867935dc37cbac, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: alvo
+      value: 
+      objectReference: {fileID: 1958578259}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: DamageTarget
+      value: 
+      objectReference: {fileID: 1958578259}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: critModifier
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: armourPierce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: armour
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: currentDodge
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: currentBlock
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: movement
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: Str
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: Int
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: Des
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: baseDamage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: classToApply
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: name
+      value: "Per\xE1grajo"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b59c0f3c73214f84ab867935dc37cbac, type: 2}
@@ -5257,9 +5413,11 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -5272,6 +5430,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -6750,6 +6909,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f042bc72b3359a247abb7126abee8212, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1958578259 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+    type: 2}
+  m_PrefabInternal: {fileID: 329710711}
+  m_Script: {fileID: 11500000, guid: ac6ad38e94f14b04ebdfc69c06bdd47f, type: 3}
 --- !u!1001 &1968903451
 Prefab:
   m_ObjectHideFlags: 0
