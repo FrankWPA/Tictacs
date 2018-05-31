@@ -1,19 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Reflection;      
+﻿using UnityEngine;
 
-public class Character : MonoBehaviour {
+public class Character : Trigger {
 
-	// Lists
-	private List<List<object[]>> TriggerList = new List<List<object[]>>();
-    public List<StatusEffect> statusEffect = new List<StatusEffect>();
+    public Character damageTarget;
 
-	public Damage newDamage;
-
-    public Character DamageTarget; 
-
-	[Header("Basic Stats")]
+    [Header("Basic Stats")]
 	public new string name = "Error";
 	public int hp = 5;
 	public int currentHp = 5;
@@ -36,38 +27,29 @@ public class Character : MonoBehaviour {
 
 	//public int block = 5;
 	public int currentBlock = 6;
-	public int blockRegen = 0;
+	//public int blockRegen = 0;
 
 	//public int dodge = 0;
 	public int currentDodge = 1;
 
 	public void Start()
 	{
-		// Adding Triggers
-		AddToList ("atk_blockTrigger", new object[] { "Critical" });
-        //AddToList("atk_critTrigger", new object[] { "Poison", 2});
-    }
+        // Adding Triggers
+        // CreateTrigger ("Condition", new object[] { "FunctionToBeCalled", argument0, argument1, ... argumentN});
+        // The function doesn't need to exist, it still can trigger other triggers as a condition.
 
-	private void AddToList (string triggerList, object[] trigger){
-		foreach (List<object[]> tL in TriggerList) {
-			if ((string) tL [0] [0] == triggerList) {
-				tL.Add (trigger);
-				return;
-			}
-		}
-        TriggerList.Add (new List<object[]> { new object[] {triggerList}});
-		AddToList (triggerList, trigger);
-	}
+        CreateTrigger ("atk_blockTrigger", new object[] { "Critical" });
+        CreateTrigger ("atk_critTrigger", new object[] { "Poison", 2 });
+    }
 
 	public void Update(){
         if (this.GetComponent<TacticsMove>().turn == true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                CauseDamage(DamageTarget);
+                CauseDamage(damageTarget);
             }
         }
-       
 	}
 
 	public void CauseDamage(Character character)
@@ -81,11 +63,11 @@ public class Character : MonoBehaviour {
 			armourPierce = this.armourPierce,
 			canBeDodged = true,
 			canBeBlocked = true,
-			TriggerList = this.TriggerList,
+			triggerList = this.triggerList,
 		};
 
-        Debug.Log("Total damage: " + character.TakeDamage (newDamage).damage);
-        //character.TakeDamage(newDamage);
+        //Debug.Log("Total damage: " + character.TakeDamage (newDamage).damage);
+        character.TakeDamage(newDamage);
     }
 
 	public Damage TakeDamage(Damage receivedDamage)
@@ -93,12 +75,12 @@ public class Character : MonoBehaviour {
 		newDamage = receivedDamage;
         
         //On Resolving an Hit - attackTrigger
-        callCombatEvents("attackTrigger");
+        CallCombatEvents("attackTrigger");
 
 		if (newDamage.canBeDodged && currentDodge > 0)
 		{
             // On Dodging a hit- dodgeTrigger
-            callCombatEvents("dodgeTrigger");
+            CallCombatEvents("dodgeTrigger");
 
             currentDodge--;
             newDamage.damage = 0;
@@ -106,12 +88,12 @@ public class Character : MonoBehaviour {
 		}
 
         // On resolving an undodged Hit - hitTrigger
-        callCombatEvents("hitTrigger");
+        CallCombatEvents("hitTrigger");
 
 		if (newDamage.canBeBlocked && currentBlock > 0)
 		{
             // On Blocking damage - blockTrigger
-            callCombatEvents("blockTrigger");
+            CallCombatEvents("blockTrigger");
 
             int blockedDamage = Mathf.Min(currentBlock, newDamage.damage);
             currentBlock -= blockedDamage;
@@ -122,12 +104,12 @@ public class Character : MonoBehaviour {
 		if (newDamage.damage > 0)
 		{
             // On Resolving unblocked damage - connectTrigger
-            callCombatEvents("connectTrigger");
+            CallCombatEvents("connectTrigger");
 
 			if (armour > newDamage.armourPierce)
 			{
                 // On Damage reduced by Armour - armourTrigger
-                callCombatEvents("armourTrigger");
+                CallCombatEvents("armourTrigger");
 
                 newDamage.damage -= armour - newDamage.armourPierce;
             }
@@ -135,14 +117,14 @@ public class Character : MonoBehaviour {
 			if (newDamage.damage > 0)
 			{
                 // On Dealing/Taking Damage - damageTrigger
-                callCombatEvents("damageTrigger");
+                CallCombatEvents("damageTrigger");
 			}
 
 			currentHp -= Mathf.Max(newDamage.damage, 0);
 
 			if (currentHp <= 0) {
                 // On Killing/Dying - DeathTrigger
-                callCombatEvents("deathTrigger");
+                CallCombatEvents("deathTrigger");
 			}
             return newDamage;
 		}
@@ -151,44 +133,6 @@ public class Character : MonoBehaviour {
 
 		return newDamage;
 	}
-
-	void callCombatEvents(string eventName)
-    {
-        EventTrigger(newDamage.actor, newDamage.TriggerList, ("atk_" + eventName));
-        EventTrigger(newDamage.target, newDamage.target.TriggerList, ("def_" + eventName));
-    }
-
-	void EventTrigger(Character target, List<List<object[]>> eventListList, string eventName)
-	{
-		foreach (List<object[]> eventList in eventListList)
-		{
-			if ((string)eventList[0][0] == eventName) {
-				for (int a = 1; a <= (eventList.Count - 1); a++){
-					object[] arguments = new object[eventList[a].Length - 1];
-					for (int i = 1; i < eventList[a].Length; i++) {
-						arguments [i - 1] = eventList[a] [i];
-					}
-					InvokeStringMethod (target ,(string)eventList[a][0], arguments);
-				}
-
-			}
-		}
-	}
-
-	public void InvokeStringMethod (Character target, string methodName, object[] args)
-	{
-		MethodInfo methodInfo = typeof(PlayerCharacter).GetMethod (methodName);
-		methodInfo.Invoke(target, args);
-	}
-
-    public object VarParser(object variable)
-    {
-        switch ((string)variable)
-        {
-            case "hp": return newDamage.damage;
-            default: return variable;
-        }
-    }
 
     // ---------------------- Triggered Events -----------------------------
 
@@ -201,7 +145,7 @@ public class Character : MonoBehaviour {
             newDamage.hasCrited = true;
 
             // On Crit - critTrigger
-            callCombatEvents("critTrigger");
+            CallCombatEvents("critTrigger");
         }
     }
 
@@ -210,7 +154,7 @@ public class Character : MonoBehaviour {
         Debug.Log("Poison!");
 
         // On poison - poisonTrigger
-        callCombatEvents("poisonTrigger");
+        CallCombatEvents("poisonTrigger");
         
         for (int i = 0; i < (int)stack; i++)
         {
