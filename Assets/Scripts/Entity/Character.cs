@@ -1,7 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using static EventSystem.Trigger;
+using UnityEngine;
+//using System.Reflection; - Not being used anymore
 
-public class Character : Trigger {
 
+public class Character : MonoBehaviour {
+
+    public List<List<object[]>> triggerList = new List<List<object[]>>();
+    public List<StatusEffect> statusEffect = new List<StatusEffect>();
+
+    public Damage newDamage;
     public Character damageTarget;
 
     [Header("Basic Stats")]
