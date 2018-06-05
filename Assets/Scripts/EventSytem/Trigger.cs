@@ -1,18 +1,15 @@
 ﻿using System.Reflection;
 using System.Collections.Generic;
+using UnityEngine;
+using System;
 
 namespace EventSystem
 {
-    class Trigger
+    public static class Trigger
     {
-        public static List<List<object[]>> triggerList = new List<List<object[]>>();
-        public static List<StatusEffect> statusEffect = new List<StatusEffect>();
-
-        public static Damage newDamage = null;
-
-        public static void CreateTrigger(string targetTriggerList, object[] trigger)
+        public static void CreateTrigger(this Character caller, string targetTriggerList, object[] trigger)
         {
-            foreach (List<object[]> tL in triggerList)
+            foreach (List<object[]> tL in caller.triggerList)
             {
                 if ((string)tL[0][0] == targetTriggerList)
                 {
@@ -20,14 +17,14 @@ namespace EventSystem
                     return;
                 }
             }
-            triggerList.Add(new List<object[]> { new object[] { targetTriggerList } });
-            CreateTrigger(targetTriggerList, trigger);
+            caller.triggerList.Add(new List<object[]> { new object[] { targetTriggerList } });
+            caller.CreateTrigger(targetTriggerList, trigger);
         }
 
-        public static void CallCombatEvents(string eventName)
+        public static void CallCombatEvents(this Character caller, string eventName)
         {
-            EventTrigger(newDamage.actor, newDamage.triggerList, ("atk_" + eventName));
-            EventTrigger(newDamage.target, newDamage.target.triggerList, ("def_" + eventName));
+            EventTrigger(caller.newDamage.actor, caller.newDamage.triggerList, ("atk_" + eventName));
+            EventTrigger(caller.newDamage.target, caller.newDamage.target.triggerList, ("def_" + eventName));
         }
 
         public static void EventTrigger(Character target, List<List<object[]>> eventListList, string eventName)
@@ -53,7 +50,6 @@ namespace EventSystem
                             //CallCombatEvents((string)eventList[a][0]);
                         }
                     }
-
                 }
             }
         }

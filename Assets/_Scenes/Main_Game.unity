@@ -1142,6 +1142,11 @@ Prefab:
       propertyPath: movement
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: damageTarget
+      value: 
+      objectReference: {fileID: 988287760}
     m_RemovedComponents:
     - {fileID: 114543192112472866, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
@@ -5178,6 +5183,11 @@ Prefab:
       propertyPath: name
       value: "Per\xE1grajo"
       objectReference: {fileID: 0}
+    - target: {fileID: 114304531540266646, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: damageTarget
+      value: 
+      objectReference: {fileID: 1958578259}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b59c0f3c73214f84ab867935dc37cbac, type: 2}
   m_IsPrefabParent: 0

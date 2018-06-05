@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using static EventSystem.Trigger;
 using UnityEngine;
-//using System.Reflection; - Not being used anymore
-
 
 public class Character : MonoBehaviour {
 
@@ -43,14 +41,13 @@ public class Character : MonoBehaviour {
 	public void Start()
 	{
         // Adding Triggers
-        // CreateTrigger ("Condition", new object[] { "FunctionToBeCalled", argument0, argument1, ... argumentN});
+        // this.CreateTrigger ("Condition", new object[] { "FunctionToBeCalled", argument0, argument1, ... argumentN});
         // The function doesn't need to exist, it still can trigger other triggers as a condition.
 
-        CreateTrigger ("atk_blockTrigger", new object[] { "Critical" });
-        CreateTrigger ("atk_critTrigger", new object[] { "Poison", 2 });
+        // this.CreateTrigger ("atk_blockTrigger", new object[] { "Critical" });
     }
 
-	public void Update(){
+    public void Update(){
         if (this.GetComponent<TacticsMove>().turn == true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -83,12 +80,12 @@ public class Character : MonoBehaviour {
 		newDamage = receivedDamage;
         
         //On Resolving an Hit - attackTrigger
-        CallCombatEvents("attackTrigger");
+        this.CallCombatEvents("attackTrigger");
 
 		if (newDamage.canBeDodged && currentDodge > 0)
 		{
             // On Dodging a hit- dodgeTrigger
-            CallCombatEvents("dodgeTrigger");
+            this.CallCombatEvents("dodgeTrigger");
 
             currentDodge--;
             newDamage.damage = 0;
@@ -96,12 +93,12 @@ public class Character : MonoBehaviour {
 		}
 
         // On resolving an undodged Hit - hitTrigger
-        CallCombatEvents("hitTrigger");
+        this.CallCombatEvents("hitTrigger");
 
 		if (newDamage.canBeBlocked && currentBlock > 0)
 		{
             // On Blocking damage - blockTrigger
-            CallCombatEvents("blockTrigger");
+            this.CallCombatEvents("blockTrigger");
 
             int blockedDamage = Mathf.Min(currentBlock, newDamage.damage);
             currentBlock -= blockedDamage;
@@ -112,12 +109,12 @@ public class Character : MonoBehaviour {
 		if (newDamage.damage > 0)
 		{
             // On Resolving unblocked damage - connectTrigger
-            CallCombatEvents("connectTrigger");
+            this.CallCombatEvents("connectTrigger");
 
 			if (armour > newDamage.armourPierce)
 			{
                 // On Damage reduced by Armour - armourTrigger
-                CallCombatEvents("armourTrigger");
+                this.CallCombatEvents("armourTrigger");
 
                 newDamage.damage -= armour - newDamage.armourPierce;
             }
@@ -125,14 +122,14 @@ public class Character : MonoBehaviour {
 			if (newDamage.damage > 0)
 			{
                 // On Dealing/Taking Damage - damageTrigger
-                CallCombatEvents("damageTrigger");
+                this.CallCombatEvents("damageTrigger");
 			}
 
 			currentHp -= Mathf.Max(newDamage.damage, 0);
 
 			if (currentHp <= 0) {
                 // On Killing/Dying - DeathTrigger
-                CallCombatEvents("deathTrigger");
+                this.CallCombatEvents("deathTrigger");
 			}
             return newDamage;
 		}
@@ -153,16 +150,16 @@ public class Character : MonoBehaviour {
             newDamage.hasCrited = true;
 
             // On Crit - critTrigger
-            CallCombatEvents("critTrigger");
+            this.CallCombatEvents("critTrigger");
         }
     }
 
     public void Poison(object stack)
     {
-        Debug.Log("Poison!");
+        Debug.Log("Poison Applied!");
 
         // On poison - poisonTrigger
-        CallCombatEvents("poisonTrigger");
+        this.CallCombatEvents("poisonTrigger");
         
         for (int i = 0; i < (int)stack; i++)
         {
