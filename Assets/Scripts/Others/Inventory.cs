@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Inventory {
+public static class Inventory
+{
 
     public static Dictionary<Item, int> inv = new Dictionary<Item, int>();
 
-    public static void AddItem (this Item item, int ammount)
+    public static void AddItem(this Item item, int ammount)
     {
         if (inv.ContainsKey(item))
         {
@@ -18,7 +19,7 @@ public static class Inventory {
         return;
     }
 
-    public static bool RemoveItem (this Item item, int ammount)
+    public static bool RemoveItem(this Item item, int ammount)
     {
         if (inv.ContainsKey(item))
         {
@@ -32,4 +33,13 @@ public static class Inventory {
 
         return false;
     }
+
+    public static void ListItems()
+    {
+        foreach (Item item in inv.Keys)
+        {
+            Debug.Log(inv[item] + "x " + item.name);
+        }
+    }
 }
+

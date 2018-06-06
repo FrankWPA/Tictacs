@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d0d17cd388bf344aa6abf1f8bdc33fe, type: 3}
-  m_Name: Dragon's Blood
+  m_Name: Potato of Power
   m_EditorClassIdentifier: 
-  name: Dragon's Blood
+  name: Potato of Power
   icon: {fileID: 0}
