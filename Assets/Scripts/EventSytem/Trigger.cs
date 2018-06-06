@@ -60,10 +60,11 @@ namespace EventSystem
             methodInfo.Invoke(target, args);
         }
 
-        public static object VarParser(object variable)
+        public static object VarParser(this Character caller, object variable)
         {
             switch ((string)variable)
             {
+                case "damage": return caller.newDamage.damage;
                 default: return variable;
             }
         }

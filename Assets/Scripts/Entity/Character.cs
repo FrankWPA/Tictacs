@@ -44,7 +44,8 @@ public class Character : MonoBehaviour {
         // this.CreateTrigger ("Condition", new object[] { "FunctionToBeCalled", argument0, argument1, ... argumentN});
         // The function doesn't need to exist, it still can trigger other triggers as a condition.
 
-        // this.CreateTrigger ("atk_blockTrigger", new object[] { "Critical" });
+        this.CreateTrigger ("atk_blockTrigger", new object[] { "Critical" });
+        this.CreateTrigger("atk_critTrigger", new object[] { "Poison", 2 });
     }
 
     public void Update(){

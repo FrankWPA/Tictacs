@@ -9,10 +9,6 @@ public class TurnManager : MonoBehaviour
 	public static Queue<string> turnKey = new Queue<string>();
     public static Queue<TacticsMove> turnTeam = new Queue<TacticsMove>();
 	public TacticsMove actualTurn;
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -29,6 +25,7 @@ public class TurnManager : MonoBehaviour
         List<TacticsMove> teamList = units[turnKey.Peek()]; ;
         foreach (TacticsMove unit in teamList)
         {
+            Debug.Log("InitTeamTurnQueue");
             turnTeam.Enqueue(unit);
         }
         StartTurn();
@@ -49,10 +46,12 @@ public class TurnManager : MonoBehaviour
 
         if (turnTeam.Count > 0)
         {
+            Debug.Log("EndTurn1");
             StartTurn();
         }
         else
         {
+            Debug.Log("EndTurn2");
             string team = turnKey.Dequeue();
             turnKey.Enqueue(team);
             InitTeamTurnQueue();
@@ -61,6 +60,7 @@ public class TurnManager : MonoBehaviour
 
     public static void AddUnit(TacticsMove unit)
     {
+        
         List<TacticsMove> list;
         if (!units.ContainsKey(unit.tag))
         {
@@ -69,14 +69,34 @@ public class TurnManager : MonoBehaviour
 
             if (!turnKey.Contains(unit.tag))
             {
+                Debug.Log("AddUnit1");
                 turnKey.Enqueue(unit.tag);
+            }
+            else
+            {
+                Debug.Log("AddUnit2");
             }
         }
         else
         {
+            Debug.Log("AddUnit3");
             list = units[unit.tag];
         }
         list.Add(unit);
+    }
+
+    public static void RemoveUnit(TacticsMove toRemove)
+    {
+        foreach(List<TacticsMove> value in units.Values)
+        {
+            foreach (TacticsMove TM in value)
+            {
+                if (TM == toRemove)
+                {
+                    value.Remove(toRemove);
+                }
+            }
+        }
     }
 
 	public void EndTurnButton(){

@@ -95,7 +95,6 @@ public class PlayerMove : TacticsMove
                     {
                         currentTile.path = true;
                         pathList.Add(currentTile);
-						Debug.Log("1");
                     }
 
 					dist = ((pathList[pathList.Count - 1].transform.position - t.transform.position));
@@ -103,14 +102,12 @@ public class PlayerMove : TacticsMove
 					if (pathList.Count < ((moveDistance - distanceMoved) + 1) && t.selectable && !t.path && !t.current && (t.adjacencyList.Contains (pathList [pathList.Count - 1]))) {
 						//t.path = true;
 						pathList.Add (t);
-						Debug.Log("2");
 					} 
 					else if (t.path) {
 						int pos = pathList.IndexOf (t);
 						while (pathList.Count - 1 > pos) {
 							pathList [pathList.Count - 1].path = false;
 							pathList.RemoveAt (pathList.Count - 1);
-							Debug.Log("-1");
 						}
 					} else if ((dist.x == 0 && Mathf.Abs (dist.z) > 1 || dist.z == 0 && Mathf.Abs (dist.x) > 1) && t.selectable && dist.y <= 1) {
 						Vector3 lastPath = pathList [pathList.Count - 1].transform.position;
@@ -128,13 +125,11 @@ public class PlayerMove : TacticsMove
 								if (scannedTile.selectable) {
 									if (scannedTile.path) {
 										while (pathList.Count - 1 > pathList.IndexOf (scannedTile)) {
-											Debug.Log("-2");
 											pathList [pathList.Count - 1].path = false;
 											pathList.RemoveAt (pathList.Count - 1);
 										}
 									} else {
 										pathList.Add (scannedTile);
-										Debug.Log("3");
 									}
 								} else {
 									stop = true;
@@ -147,7 +142,6 @@ public class PlayerMove : TacticsMove
 						while (pathList.Count - 1 > (moveDistance - distanceMoved)) {
 							pathList [pathList.Count - 1].path = false;
 							pathList.RemoveAt (pathList.Count - 1);
-							Debug.Log("-3");
 						}
 
 					} else if (!t.path && pathList.Count < (moveDistance - distanceMoved)) {
@@ -173,7 +167,6 @@ public class PlayerMove : TacticsMove
 
             if ((((Input.GetMouseButtonUp(1) && pathList.Count > 0) || (Input.GetMouseButtonUp(0) && pathList.Count <= 1)) && makingPath))
             {
-                Debug.Log("Canceling");
                 foreach (Tiles tile in pathList)
                 {
                     tile.path = false;
@@ -204,7 +197,6 @@ public class PlayerMove : TacticsMove
 				goto end2;
 			else if (t.selectable && (t.adjacencyList.Contains(pathList[pathList.Count - 1]))) {
                 pathList.Add (t);
-				Debug.Log("4");
 			}
             path.Pop();
 		}
