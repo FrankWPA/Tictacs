@@ -1,0 +1,35 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class Inventory {
+
+    public static Dictionary<Item, int> inv = new Dictionary<Item, int>();
+
+    public static void AddItem (this Item item, int ammount)
+    {
+        if (inv.ContainsKey(item))
+        {
+            inv[item] = inv[item] + ammount > 999 ? 999 : inv[item] + ammount;
+            return;
+        }
+
+        inv.Add(item, ammount);
+        return;
+    }
+
+    public static bool RemoveItem (this Item item, int ammount)
+    {
+        if (inv.ContainsKey(item))
+        {
+            if (inv[item] >= ammount)
+            {
+                inv[item] -= ammount;
+                return true;
+            }
+            else return false;
+        }
+
+        return false;
+    }
+}
