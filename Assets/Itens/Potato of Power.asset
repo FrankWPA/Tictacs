@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: Potato of Power
   m_EditorClassIdentifier: 
   name: Potato of Power
-  icon: {fileID: 0}
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}

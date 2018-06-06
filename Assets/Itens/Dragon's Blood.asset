@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: Dragon's Blood
   m_EditorClassIdentifier: 
   name: Dragon's Blood
-  icon: {fileID: 0}
+  icon: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}

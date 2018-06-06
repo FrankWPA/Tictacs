@@ -7,65 +7,113 @@ namespace EventSystem
 {
     public static class Trigger
     {
-        public static void CreateTrigger(this Character caller, string targetTriggerList, object[] trigger)
+        public static void CreateTrigger(this Character caller, string keyTriggerList, object[] trigger)
         {
-            foreach (List<object[]> tL in caller.triggerList)
+            if (caller.triggerList.ContainsKey(keyTriggerList))
             {
-                if ((string)tL[0][0] == targetTriggerList)
-                {
-                    tL.Add(trigger);
-                    return;
-                }
+                caller.triggerList[keyTriggerList].Add(trigger);
             }
-            caller.triggerList.Add(new List<object[]> { new object[] { targetTriggerList } });
-            caller.CreateTrigger(targetTriggerList, trigger);
-        }
-
-        public static void CallCombatEvents(this Character caller, string eventName)
-        {
-            EventTrigger(caller.newDamage.actor, caller.newDamage.triggerList, ("atk_" + eventName));
-            EventTrigger(caller.newDamage.target, caller.newDamage.target.triggerList, ("def_" + eventName));
-        }
-
-        public static void EventTrigger(Character target, List<List<object[]>> eventListList, string eventName)
-        {
-            foreach (List<object[]> eventList in eventListList)
+            else
             {
-                if ((string)eventList[0][0] == eventName)
+                caller.triggerList.Add(keyTriggerList, new List<object[]> { trigger });
+            }
+            //Debug.Log(keyTriggerList + ": " + caller.triggerList[keyTriggerList][0][0]);
+        }
+
+        public static void CallCombatEvents (this Character caller, string eventName)
+        {
+            caller.newDamage.actor.EventTrigger (caller.newDamage.triggerList, ("atk_" + eventName));
+            caller.newDamage.target.EventTrigger (caller.newDamage.target.triggerList, ("def_" + eventName));
+        }
+
+        public static void EventTrigger (this Character target, Dictionary<string, List<object[]>> eventList, string eventName)
+        {
+            if (eventList.ContainsKey(eventName))
+            {
+                foreach (object[] trigger in eventList[eventName])
                 {
-                    for (int a = 1; a <= (eventList.Count - 1); a++)
+                    
+                    object[] args = new object[trigger.Length - 1];
+                    Type[] types = new Type[trigger.Length - 1];
+
+                    for (int i = 1; i < trigger.Length; i++)
                     {
-                        object[] arguments = new object[eventList[a].Length - 1];
-                        for (int i = 1; i < eventList[a].Length; i++)
-                        {
-                            arguments[i - 1] = eventList[a][i];
-                        }
-                        if (target.GetType().GetMethod((string)eventList[a][0]) != null)
-                        {
-                            InvokeStringMethod(target, (string)eventList[a][0], arguments);
-                        }
-                        else
-                        {
-                            EventTrigger(target, eventListList, (string)eventList[a][0]);
-                            //CallCombatEvents((string)eventList[a][0]);
-                        }
+                        args[i - 1] = (trigger[i].ToString().Substring(0,1) == "p" ? target.VarParser(trigger[i]) : trigger[i]);
+                        types[i - 1] = args[i - 1].GetType();
+                    }
+
+                    if (target.GetType().GetMethod((string)trigger[0], types) != null)
+                    {
+                        target.InvokeStringMethod((string)trigger[0], args, types);
+                    }
+                    else
+                    {
+                        target.EventTrigger(eventList, (string)trigger[0]);
                     }
                 }
             }
         }
 
-        public static void InvokeStringMethod(Character target, string methodName, object[] args)
+        public static void InvokeStringMethod(this Character target, string methodName, object[] args, Type[] types)
         {
-            MethodInfo methodInfo = target.GetType().GetMethod(methodName);
+            MethodInfo methodInfo = target.GetType().GetMethod(methodName, types);
             methodInfo.Invoke(target, args);
         }
 
-        public static object VarParser(this Character caller, object variable)
+        public static object VarParser(this Character target, object variable)
         {
-            switch ((string)variable)
+            //Debug.Log("Parsing '" + variable.ToString() + "'");
+            switch (variable.ToString())
             {
-                case "damage": return caller.newDamage.damage;
+                case "pTarget": return target.newDamage.target;
                 default: return variable;
+            }
+        }
+
+        public static void ApplyTrigger(this List<object[]> triggerList, Character owner)
+        {
+            foreach (object[] toApply in triggerList)
+            {
+                object[] args = new object[toApply.Length - 1];
+
+                for (int i = 1; i < toApply.Length; i++)
+                {
+                    args[i - 1] = toApply[i];
+                }
+
+                owner.CreateTrigger((string)toApply[0], args);
+            }
+        }
+
+        public static void RemoveTrigger(this List<object[]> triggerList, Character owner)
+        {
+            foreach (object[] toRemove in triggerList)
+            {
+                if (owner.triggerList.ContainsKey((string)toRemove[0]))
+                {
+                    object[] args = new object[toRemove.Length - 1];
+
+                    for (int i = 1; i < toRemove.Length; i++)
+                    {
+                        args[i - 1] = toRemove[i];
+                    }
+
+                    for (int a = 0; a < owner.triggerList[(string)toRemove[0]].Count; a++)
+                    {
+                        int max = Mathf.Max(args.Length, owner.triggerList[(string)toRemove[0]][a].Length);
+
+                        for (int i = 0; i < max; i++)
+                        {
+                            if (owner.triggerList[(string)toRemove[0]][a][0] != args[0]) return;
+                            if (i == max - 1)
+                            {
+                                owner.triggerList[(string)toRemove[0]].Remove(owner.triggerList[(string)toRemove[0]][a]);
+                                return;
+                            }
+                        }
+                        
+                    }
+                }
             }
         }
     }

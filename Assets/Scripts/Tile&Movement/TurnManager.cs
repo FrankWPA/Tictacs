@@ -3,103 +3,116 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TurnManager : MonoBehaviour
+public static class TurnManager
 {
-	public static Dictionary<string, List<TacticsMove>> units = new Dictionary<string, List<TacticsMove>>();
-	public static Queue<string> turnKey = new Queue<string>();
-    public static Queue<TacticsMove> turnTeam = new Queue<TacticsMove>();
-	public TacticsMove actualTurn;
-
-    // Update is called once per frame
-    void Update()
+	public static Dictionary<string, List<TacticsMove>> TeamUnits = new Dictionary<string, List<TacticsMove>>();
+    public static List<TacticsMove> UnitList = new List<TacticsMove>();
+    public static Queue<string> TeamQueue = new Queue<string>();
+    public static TacticsMove CurrentTurn;
+    public static string CurrentTeam;
+    
+    public static void InitCombat()
     {
-        if (turnTeam.Count == 0)
-        {
-            InitTeamTurnQueue();
-        }
-		actualTurn = turnTeam.Peek ();
+        InitTeamTurnQueue();
+    }
+
+    public static void EndCombat()
+    {
+        TeamUnits.Clear();
+        TeamQueue.Clear();
     }
 
     static void InitTeamTurnQueue()
     {
-        List<TacticsMove> teamList = units[turnKey.Peek()]; ;
-        foreach (TacticsMove unit in teamList)
+        foreach (TacticsMove unit in UnitList)
         {
-            Debug.Log("InitTeamTurnQueue");
-            turnTeam.Enqueue(unit);
+            if (TeamUnits.ContainsKey(unit.tag))
+            {
+                TeamUnits[unit.tag].Add(unit);
+            }
+            else
+            {
+                TeamUnits.Add(unit.tag, new List<TacticsMove> { unit });
+            }
         }
+        foreach (string team in TeamUnits.Keys)
+        {
+            TeamQueue.Enqueue(team);
+        }
+        CurrentTeam = TeamQueue.Peek();
+        CurrentTurn = TeamUnits[CurrentTeam][0];
         StartTurn();
+    }
+
+    public static void NextTeam()
+    {
+        TeamQueue.Enqueue(TeamQueue.Dequeue());
+        CurrentTeam = TeamQueue.Peek();
+        CurrentTurn = TeamUnits[CurrentTeam][0];
     }
 
     public static void StartTurn()
     {
-        if (turnTeam.Count > 0)
-        {
-            turnTeam.Peek().BeginTurn();
-        }
+        CurrentTurn.passedTurn = false;
+        CurrentTurn.BeginTurn();
     }
 
     public static void EndTurn()
     {
-        TacticsMove unit = turnTeam.Dequeue();
-        unit.EndTurn();
+        CurrentTurn.passedTurn = true;
+        CurrentTurn.EndTurn();
 
-        if (turnTeam.Count > 0)
+        foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())
         {
-            Debug.Log("EndTurn1");
-            StartTurn();
-        }
-        else
-        {
-            Debug.Log("EndTurn2");
-            string team = turnKey.Dequeue();
-            turnKey.Enqueue(team);
-            InitTeamTurnQueue();
-        }
-    }
-
-    public static void AddUnit(TacticsMove unit)
-    {
-        
-        List<TacticsMove> list;
-        if (!units.ContainsKey(unit.tag))
-        {
-            list = new List<TacticsMove>();
-            units[unit.tag] = list;
-
-            if (!turnKey.Contains(unit.tag))
+            if (!unit.passedTurn)
             {
-                Debug.Log("AddUnit1");
-                turnKey.Enqueue(unit.tag);
-            }
-            else
-            {
-                Debug.Log("AddUnit2");
+                CurrentTurn = unit;
+                StartTurn();
+                return;
             }
         }
-        else
+        foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())
         {
-            Debug.Log("AddUnit3");
-            list = units[unit.tag];
+            unit.passedTurn = false;
         }
-        list.Add(unit);
+
+        NextTeam();
+        StartTurn();
     }
 
-    public static void RemoveUnit(TacticsMove toRemove)
+    public static void AddUnit(this TacticsMove toAdd)
     {
-        foreach(List<TacticsMove> value in units.Values)
+        UnitList.Add(toAdd);
+    }
+
+    public static void RemoveUnit(this TacticsMove toRemove)
+    {
+        UnitList.Remove(toRemove);
+
+        if (TeamUnits[toRemove.tag].Contains(toRemove))
         {
-            foreach (TacticsMove TM in value)
+            TeamUnits[toRemove.tag].Remove(toRemove);
+            if (TeamUnits[toRemove.tag].Count == 0)
             {
-                if (TM == toRemove)
+                TeamUnits.Remove(toRemove.tag);
+
+                while (TeamQueue.Peek() != toRemove.tag)
                 {
-                    value.Remove(toRemove);
+                    TeamQueue.Enqueue(TeamQueue.Dequeue());
+                }
+
+                TeamQueue.Dequeue();
+
+                while (TeamQueue.Peek() != CurrentTeam)
+                {
+                    TeamQueue.Enqueue(TeamQueue.Dequeue());
                 }
             }
+            if (CurrentTurn == toRemove)
+            {
+                NextTeam();
+                EndTurn();
+            }       
         }
     }
-
-	public void EndTurnButton(){
-		EndTurn ();
-	}
 }

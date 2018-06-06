@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Damage
 {
-    public List<List<object[]>> triggerList = new List<List<object[]>>();
+    public Dictionary<string, List<object[]>> triggerList = new Dictionary<string, List<object[]>>();
 
     public Character actor;
     public Character target;

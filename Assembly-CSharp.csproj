@@ -65,6 +65,9 @@
     <Compile Include="Assets\Scripts\EventSytem\StatusEffect.cs" />
     <Compile Include="Assets\Scripts\EventSytem\Trigger.cs" />
     <Compile Include="Assets\Scripts\Others\CameraControl.cs" />
+    <Compile Include="Assets\Scripts\Others\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Others\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Others\InvTest.cs" />
     <Compile Include="Assets\Scripts\Others\Item.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\NpcMove.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\PlayerMove.cs" />
