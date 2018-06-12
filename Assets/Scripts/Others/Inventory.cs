@@ -34,6 +34,20 @@ public static class Inventory
         return false;
     }
 
+    public static bool CheckItem(this Item item, int ammount)
+    {
+        if (inv.ContainsKey(item))
+        {
+            if (inv[item] >= ammount)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        return false;
+    }
+
     public static void ListItems()
     {
         foreach (Item item in inv.Keys)

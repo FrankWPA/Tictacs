@@ -59,6 +59,7 @@ public static class TurnManager
 
     public static void EndTurn()
     {
+        CurrentTurn.distanceMoved = 0;
         CurrentTurn.passedTurn = true;
         CurrentTurn.EndTurn();
 

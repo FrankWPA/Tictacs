@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using static EventSystem.Trigger;
 using UnityEngine;
 
 public class Character : MonoBehaviour {
@@ -48,7 +47,7 @@ public class Character : MonoBehaviour {
         //this.CreateTrigger("atk_dodgeTrigger", new object[] { "Critical"});
         //this.CreateTrigger("atk_blockTrigger", new object[] { "Critical", 1});
         
-        //this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "pTarget", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
+        this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "pTarget", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
 
         this.CreateTrigger("def_attackTrigger", new object[] { "UpdateStatus" });
         this.CreateTrigger("def_deathTrigger", new object[] { "Die" });
