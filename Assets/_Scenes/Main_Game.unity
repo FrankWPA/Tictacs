@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641258, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1081,7 +1081,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1768354425580480, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
         type: 2}
@@ -3036,7 +3036,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1780385248156916, guid: b59c0f3c73214f84ab867935dc37cbac, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1780385248156916, guid: b59c0f3c73214f84ab867935dc37cbac, type: 2}
       propertyPath: m_TagString
@@ -5387,6 +5387,12 @@ Prefab:
       propertyPath: Agi
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114595135604648028, guid: b59c0f3c73214f84ab867935dc37cbac,
+        type: 2}
+      propertyPath: toEquip
+      value: 
+      objectReference: {fileID: 11400000, guid: d1e0f2b403c0ddd4bb273bd9748636c6,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b59c0f3c73214f84ab867935dc37cbac, type: 2}
   m_IsPrefabParent: 0
@@ -7381,11 +7387,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d9b62e11319634089e8c3dbad523bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Result: {fileID: 11400000, guid: 9092d3d40ac994647b4e7eb5546d7549, type: 2}
+  Result: {fileID: 11400000, guid: e77656bce98b9e24f8ef5cbd4b654e6d, type: 2}
   Ammount: 1
   newIngredient: []
   newAmmount: 
-  ingredientAmmount: 3
+  ingredientAmmount: 1
 --- !u!4 &2030155428 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4714517285375072, guid: f042bc72b3359a247abb7126abee8212,
@@ -7432,7 +7438,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1768354425580480, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
         type: 2}

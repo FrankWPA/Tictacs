@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc5f0f5babc32d94aa8b0118a3b83ca9, type: 3}
+  m_Name: Cracked Round Shield
+  m_EditorClassIdentifier: 
+  name: Cracked Round Shield
+  icon: {fileID: 0}
+  slot: 3
+  twoHanded: 0
+  damage: 0
+  block: 10
+  blockRegen: 1
+  armour: 0

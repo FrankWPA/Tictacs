@@ -33,7 +33,7 @@ public class Character : MonoBehaviour {
 
     //public int block = 5;
     public int currentBlock = 6;
-    //public int blockRegen = 0;
+    public int blockRegen = 0;
 
     //public int dodge = 0;
     public int currentDodge = 1;

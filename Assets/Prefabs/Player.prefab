@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23093305670412764}
   - component: {fileID: 114005445729437878}
   - component: {fileID: 114304531540266646}
+  - component: {fileID: 114595135604648028}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -38,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1780385248156916}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 3, z: 11}
+  m_LocalPosition: {x: -1, y: 4, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,9 +54,11 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 1d84c7cc4e565e74ca2267902ed3d08e, type: 2}
   m_StaticBatchInfo:
@@ -68,6 +71,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -96,13 +100,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMoveType: 1
   turn: 0
+  passedTurn: 0
   moving: 0
   moveSpeed: 10
-  moveDistance: 0
+  moveDistance: 4
   distanceMoved: 0
   currentTile: {fileID: 0}
   pathList: []
-  halfHeight: 0
+  halfHeight: 1
   actualTargetTile: {fileID: 0}
   TilesChecked: 0
   makingPath: 0
@@ -118,22 +123,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f3fc1ec5556db469e3b14b9758a054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Error
+  damageTarget: {fileID: 0}
+  name: "Per\xE1grajo"
   hp: 5
   currentHp: 5
-  movement: 8
+  movement: 4
   Str: 3
   Int: 2
   Agi: 1
   Des: 2
-  baseDamage: 2
-  critModifier: 3
-  armourPierce: 1
-  armour: 2
-  currentBlock: 8
-  blockRegen: 0
-  currentDodge: 1
+  baseDamage: 0
+  critModifier: 0
+  armourPierce: 0
+  armour: 0
+  currentBlock: 0
+  currentDodge: 0
   classToApply: 7
+--- !u!114 &114595135604648028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1780385248156916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454e134add9a99949bdd9636bf239111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136813485342056396
 CapsuleCollider:
   m_ObjectHideFlags: 1
