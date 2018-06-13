@@ -4,6 +4,9 @@ using System;
 
 public class PlayerEquip : MonoBehaviour
 {
+    // Temporary
+    public List<string> newTrigger;
+
     Character character;
 
     public Dictionary<EquipSlot, Equipment> equipList = new Dictionary<EquipSlot, Equipment>();
@@ -57,6 +60,18 @@ public class PlayerEquip : MonoBehaviour
     void ApplyEquip(Equipment equipment)
     {
         equipList[equipment.slot] = equipment;
+
+        // Temporary
+        if (newTrigger.Count > 0)
+        {
+            equipment.StatusTriggerList.Add(new object[newTrigger.Count]);
+            for (int i = 0; i < newTrigger.Count; i++)
+            {
+                equipment.StatusTriggerList[0][i] = newTrigger[i];
+            }
+        }
+        // Temporary
+
         equipment.OnEquip(character);
     }
 

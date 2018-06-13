@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Inventory/Equipment")]
 public class Equipment : Item
 {
+    public List<object[]> StatusTriggerList = new List<object[]>();
+
     public EquipSlot slot = EquipSlot.none;
     public bool twoHanded = false;
 
@@ -13,20 +15,6 @@ public class Equipment : Item
     public int armour = 0;
     public int armourPirerce = 0;
 
-
-    public List<object[]> StatusTriggerList = new List<object[]>();
-
-    public void ApplyTrigger()
-    {
-        //StatusTriggerList.ApplyTrigger(Owner);
-    }
-
-    public void RemoveTrigger()
-    {
-        Debug.Log("Removing Status");
-        //StatusTriggerList.RemoveTrigger(Owner);
-    }
-
     public void OnEquip(Character character)
     {
         character.baseDamage += damage;
@@ -34,6 +22,8 @@ public class Equipment : Item
         character.blockRegen += blockRegen;
         character.armour += armour;
         character.armourPierce += armourPirerce;
+        
+        StatusTriggerList.ApplyTrigger(character);
     }
 
     public void OnUnequip(Character character)
@@ -43,6 +33,8 @@ public class Equipment : Item
         character.blockRegen -= blockRegen;
         character.armour -= armour;
         character.armourPierce -= armourPirerce;
+
+        StatusTriggerList.RemoveTrigger(character);
     }
 }
 
