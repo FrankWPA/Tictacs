@@ -23,34 +23,33 @@ public class CameraControl : MonoBehaviour {
     float panSpeedModifier = 0.5f;
 
     Camera cam;
-
-    // Use this for initialization
+    
     void Start () {
         cam = Camera.main;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Escape)) borderPan = !borderPan;
-        panCamera();
+        if (borderPan)
+        {
+            panCamera(Input.mousePosition);
+        }
         rotateCamera();
         zoomCamera();
     }
 
-    void panCamera()
+    public void panCamera(Vector2 pos)
     {
         Vector2 inputDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-		if (borderPan) {
-			if (Input.mousePosition.x < panDist)
-				inputDir.x -= panSpeed * panSpeedModifier;
-			if (Input.mousePosition.x > Screen.width - panDist)
-				inputDir.x += panSpeed * panSpeedModifier;
-			if (Input.mousePosition.y < panDist)
-				inputDir.y -= panSpeed * panSpeedModifier;
-			if (Input.mousePosition.y > Screen.height - panDist)
-				inputDir.y += panSpeed * panSpeedModifier;
-		}
+        
+		if (pos.x < panDist)
+			inputDir.x -= panSpeed * panSpeedModifier;
+		if (pos.x > Screen.width - panDist)
+			inputDir.x += panSpeed * panSpeedModifier;
+		if (pos.y < panDist)
+			inputDir.y -= panSpeed * panSpeedModifier;
+		if (pos.y > Screen.height - panDist)
+			inputDir.y += panSpeed * panSpeedModifier;
 
         var forward = cam.transform.forward;
         var right = cam.transform.right;

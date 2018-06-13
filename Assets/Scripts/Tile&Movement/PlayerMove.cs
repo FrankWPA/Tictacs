@@ -18,44 +18,26 @@ public class PlayerMove : TacticsMove
 
     void Update()
     {
-        if (!turn)
+        if (turn && b[a[Actions.Move]] == false)
         {
-            return;
+            if (!moving)
+            {
+                if (TilesChecked) MakePath();
+            }
+            else
+            {
+                TilesChecked = false;
+                MoveLine();
+            }
         }
-        switch (currentMoveType)
+    }
+
+    public override void MoveAction()
+    {
+        if (!TilesChecked)
         {
-            case MoveType.Line:
-                if (!moving)
-                {
-                    if (!TilesChecked)
-                    {
-                        FindSelectableTiles(1);
-                        TilesChecked = true;
-                    }
-                    MakePath();
-                }
-                else
-                {
-                    TilesChecked = false;
-                    MoveLine();
-                }
-                break;
-            case MoveType.Selection:
-                if (!moving)
-                {
-                    if (!TilesChecked)
-                    {
-                        FindSelectableTiles(1);
-                        TilesChecked = true;
-                    }
-					CheckMouse();
-                }
-                else
-                {
-                    TilesChecked = false;
-                    MoveSelection();
-                }
-                break;
+            FindSelectableTiles(1);
+            TilesChecked = true;
         }
     }
 

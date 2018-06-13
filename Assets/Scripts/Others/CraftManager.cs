@@ -17,9 +17,7 @@ public static class CraftManager
 
     public static void UpdateRecipes()
     {
-        Recipe[] newRecipeList = RecipeList.Keys.ToArray();
-
-        foreach (Recipe recipe in newRecipeList)
+        foreach (Recipe recipe in RecipeList.Keys.ToArray())
         {
             int itensChecked = 0;
             foreach (Item item in recipe.Ingredients.Keys)

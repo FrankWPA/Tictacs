@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 public static class TurnManager
 {
@@ -62,6 +60,11 @@ public static class TurnManager
         CurrentTurn.distanceMoved = 0;
         CurrentTurn.passedTurn = true;
         CurrentTurn.EndTurn();
+
+        foreach (TacticsMove.TurnActions action in CurrentTurn.b.Keys.ToArray())
+        {
+            CurrentTurn.b[action] = false;
+        }
 
         foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())
         {

@@ -54,13 +54,7 @@ public class Character : MonoBehaviour {
     }
 
     public void Update() {
-        if (this.tag == "Player")
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                CauseDamage(damageTarget);
-            }
-        }
+        
     }
 
     public void CauseDamage(Character character)

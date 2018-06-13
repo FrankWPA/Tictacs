@@ -14,23 +14,24 @@ public class NpcMove : TacticsMove
 
     void Update()
     {
-        if (!turn)
+        if (turn && b[a[Actions.Move]] == false)
         {
-            return;
-        }
-        else if (currentMoveType == MoveType.Selection)
-        {
-            if (!moving)
-            {
-                FindNearestTarget();
-                CalculatePath();
-                FindSelectableTiles(1);
-            }
-            else
+            if (moving)
             {
                 MoveSelection();
             }
+            else
+            {
+                MoveAction();
+            }
         }
+    }
+
+    public override void MoveAction()
+    {
+        FindNearestTarget();
+        CalculatePath();
+        FindSelectableTiles(1);
     }
 
     void CalculatePath()
