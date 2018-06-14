@@ -7,6 +7,7 @@ TagManager:
   - Tile
   - Npc
   - CameraBase
+  - GameManager
   layers:
   - Default
   - TransparentFX

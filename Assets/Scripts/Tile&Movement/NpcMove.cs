@@ -20,10 +20,6 @@ public class NpcMove : TacticsMove
             {
                 MoveSelection();
             }
-            else
-            {
-                MoveAction();
-            }
         }
     }
 

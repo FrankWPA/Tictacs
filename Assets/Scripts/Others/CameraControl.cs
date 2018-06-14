@@ -22,6 +22,7 @@ public class CameraControl : MonoBehaviour {
     float panDist = 10f;
     float panSpeedModifier = 0.5f;
 
+    Vector2 inputDir;
     Camera cam;
     
     void Start () {
@@ -36,13 +37,18 @@ public class CameraControl : MonoBehaviour {
         }
         rotateCamera();
         zoomCamera();
+
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        {
+            panCamera(new Vector2(Screen.width/2, Screen.height/2));
+        }
     }
 
     public void panCamera(Vector2 pos)
     {
-        Vector2 inputDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        
-		if (pos.x < panDist)
+        inputDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        if (pos.x < panDist)
 			inputDir.x -= panSpeed * panSpeedModifier;
 		if (pos.x > Screen.width - panDist)
 			inputDir.x += panSpeed * panSpeedModifier;

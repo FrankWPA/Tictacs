@@ -7981,7 +7981,7 @@ GameObject:
   - component: {fileID: 2025467830}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8000,6 +8000,9 @@ MonoBehaviour:
   cameraControl: {fileID: 0}
   cam: {fileID: 0}
   follow: 0
+  camFollow: 0
+  h: {x: 0, y: 0, z: 0}
+  j: {x: 0, y: 0, z: 0}
 --- !u!4 &2025467829
 Transform:
   m_ObjectHideFlags: 0

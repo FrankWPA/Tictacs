@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    public CameraControl cameraControl;
+    public GameObject cameraBase;
     public Camera cam;
 
     public bool follow = false;
-    Vector3 h;
+    public bool camFollow = false;
+    public Vector3 j;
 
     private void Awake()
     {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        cameraControl = GameObject.FindGameObjectWithTag("CameraBase").GetComponent<CameraControl>();
+        cameraBase = GameObject.FindGameObjectWithTag("CameraBase");
     }
 
     void Update()
@@ -31,7 +32,6 @@ public class GameManager : MonoBehaviour {
                         TurnManager.CurrentTurn.EndTurn();
                         hit.collider.GetComponent<TacticsMove>().BeginTurn();
                         TurnManager.CurrentTurn = hit.collider.GetComponent<TacticsMove>();
-                        //follow = true;
                     }
                 }
             }
@@ -49,14 +49,15 @@ public class GameManager : MonoBehaviour {
             follow = true;
         }
 
-        /*if (follow)
+        if (camFollow)
         {
-            h = cam.WorldToScreenPoint(TurnManager.CurrentTurn.transform.position);
-            h -= new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
-            h += new Vector3(Mathf.Sign(h.x) * cam.pixelWidth, Mathf.Sign(h.y) * cam.pixelHeight);
-            Vector2 pos = new Vector2(h.x, h.y);
-            cameraControl.panCamera(pos);
-        }*/
+            j = new Vector3(j.x, cameraBase.transform.position.y, j.z);
+            cameraBase.transform.position = Vector3.MoveTowards(cameraBase.transform.position, j, cameraBase.GetComponent<CameraControl>().panSpeed);
+            if (cameraBase.transform.position == j)
+            {
+                camFollow = false;
+            }
+        }
 
         if (follow)
         {
