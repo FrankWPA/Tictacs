@@ -58,6 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\InventoryDisplay.cs" />
+    <Compile Include="Assets\InventoryItemText.cs" />
     <Compile Include="Assets\Scripts\Entity\Character.cs" />
     <Compile Include="Assets\Scripts\Entity\EnemyCharacter.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerCharacter.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Assets\Scripts\Tile&amp;Movement\TacticsMove.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\Tiles.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\TurnManager.cs" />
+    <Compile Include="Assets\ToggleInventory.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Frank/Documents/Unity/Tictacs/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
