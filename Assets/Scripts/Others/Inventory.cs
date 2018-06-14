@@ -3,8 +3,8 @@ using UnityEngine;
 
 public static class Inventory
 {
-
     public static Dictionary<Item, int> inv = new Dictionary<Item, int>();
+    public static InventoryDisplay inventoryDisplay = null;
 
     public static void AddItem(this Item item, int ammount)
     {
@@ -15,6 +15,10 @@ public static class Inventory
         }
 
         inv.Add(item, ammount);
+
+        if (inventoryDisplay != null) inventoryDisplay.UpdateInventory();
+        else Debug.Log("Inventory Display null!");
+
         return;
     }
 
