@@ -53,6 +53,7 @@ public static class TurnManager
     {
         CurrentTurn.passedTurn = false;
         CurrentTurn.BeginTurn();
+        CurrentTurn.GetComponent<TacticsMove>().MoveAction();
     }
 
     public static void EndTurn()
@@ -61,9 +62,9 @@ public static class TurnManager
         CurrentTurn.passedTurn = true;
         CurrentTurn.EndTurn();
 
-        foreach (TacticsMove.TurnActions action in CurrentTurn.b.Keys.ToArray())
+        foreach (TacticsMove.TurnActions action in CurrentTurn.ActionUse.Keys.ToArray())
         {
-            CurrentTurn.b[action] = false;
+            CurrentTurn.ActionUse[action] = false;  
         }
 
         foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())

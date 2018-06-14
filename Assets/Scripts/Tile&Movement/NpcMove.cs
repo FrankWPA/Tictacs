@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NpcMove : TacticsMove
 {
-    GameObject targetUnit;
+    public GameObject targetUnit;
 
     void Start()
     {
@@ -14,11 +14,15 @@ public class NpcMove : TacticsMove
 
     void Update()
     {
-        if (turn && b[a[Actions.Move]] == false)
+        if (turn && ActionUse[ActionCost[Actions.Move]] == false)
         {
             if (moving)
             {
                 MoveSelection();
+            }
+            else
+            {
+                MoveAction();
             }
         }
     }

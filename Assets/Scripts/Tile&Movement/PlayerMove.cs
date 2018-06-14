@@ -18,11 +18,12 @@ public class PlayerMove : TacticsMove
 
     void Update()
     {
-        if (turn && b[a[Actions.Move]] == false)
+        if (turn && ActionUse[ActionCost[Actions.Move]] == false)
         {
             if (!moving)
             {
-                if (TilesChecked) MakePath();
+                if (!TilesChecked) MoveAction(); 
+                else MakePath();
             }
             else
             {
@@ -34,11 +35,8 @@ public class PlayerMove : TacticsMove
 
     public override void MoveAction()
     {
-        if (!TilesChecked)
-        {
-            FindSelectableTiles(1);
-            TilesChecked = true;
-        }
+        FindSelectableTiles(1);
+        TilesChecked = true;
     }
 
     void CheckMouse()

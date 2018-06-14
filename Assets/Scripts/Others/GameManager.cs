@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
 
     public bool follow = false;
     public bool camFollow = false;
-    public Vector3 j;
+    public Vector3 newCameraPos;
 
     private void Awake()
     {
@@ -31,7 +31,9 @@ public class GameManager : MonoBehaviour {
                     {
                         TurnManager.CurrentTurn.EndTurn();
                         hit.collider.GetComponent<TacticsMove>().BeginTurn();
-                        TurnManager.CurrentTurn = hit.collider.GetComponent<TacticsMove>();
+                        TacticsMove currentTm = hit.collider.GetComponent<TacticsMove>();
+                        TurnManager.CurrentTurn = currentTm;
+                        currentTm.MoveAction();
                     }
                 }
             }
@@ -51,9 +53,9 @@ public class GameManager : MonoBehaviour {
 
         if (camFollow)
         {
-            j = new Vector3(j.x, cameraBase.transform.position.y, j.z);
-            cameraBase.transform.position = Vector3.MoveTowards(cameraBase.transform.position, j, cameraBase.GetComponent<CameraControl>().panSpeed);
-            if (cameraBase.transform.position == j)
+            newCameraPos = new Vector3(newCameraPos.x, cameraBase.transform.position.y, newCameraPos.z);
+            cameraBase.transform.position = Vector3.MoveTowards(cameraBase.transform.position, newCameraPos, cameraBase.GetComponent<CameraControl>().panSpeed);
+            if (cameraBase.transform.position == newCameraPos)
             {
                 camFollow = false;
             }
@@ -77,7 +79,7 @@ public class GameManager : MonoBehaviour {
         TacticsMove currentTm = TurnManager.CurrentTurn.GetComponent<TacticsMove>();
         currentChar.CauseDamage(currentChar.damageTarget);
 
-        currentTm.b[currentTm.a[TacticsMove.Actions.Attack]] = true;
+        currentTm.ActionUse[currentTm.ActionCost[TacticsMove.Actions.Attack]] = true;
     }
 
     public void EndTurn()
