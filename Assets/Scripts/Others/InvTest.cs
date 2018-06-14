@@ -27,11 +27,10 @@ public class InvTest : MonoBehaviour
             item.RemoveItem(5);
         }
 
-        //Show Inventory
+        //Debug Inventory
         if (Input.GetKeyDown(KeyCode.I))
         {
             Inventory.ListItems();
         }
-
     }
 }
