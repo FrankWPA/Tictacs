@@ -6,18 +6,24 @@ public static class TurnManager
 	public static Dictionary<string, List<TacticsMove>> TeamUnits = new Dictionary<string, List<TacticsMove>>();
     public static List<TacticsMove> UnitList = new List<TacticsMove>();
     public static Queue<string> TeamQueue = new Queue<string>();
-    public static TacticsMove CurrentTurn;
+    public static TacticsMove SelectedCharacterMove;
     public static string CurrentTeam;
+
+    public static bool Ready = false;
     
     public static void InitCombat()
     {
-        InitTeamTurnQueue();
+        if (!Ready) {
+            InitTeamTurnQueue();
+            Ready = true;
+        }
     }
 
     public static void EndCombat()
     {
         TeamUnits.Clear();
         TeamQueue.Clear();
+        Ready = false;
     }
 
     static void InitTeamTurnQueue()
@@ -38,7 +44,7 @@ public static class TurnManager
             TeamQueue.Enqueue(team);
         }
         CurrentTeam = TeamQueue.Peek();
-        CurrentTurn = TeamUnits[CurrentTeam][0];
+        SelectedCharacterMove = TeamUnits[CurrentTeam][0];
         StartTurn();
     }
 
@@ -46,32 +52,32 @@ public static class TurnManager
     {
         TeamQueue.Enqueue(TeamQueue.Dequeue());
         CurrentTeam = TeamQueue.Peek();
-        CurrentTurn = TeamUnits[CurrentTeam][0];
+        SelectedCharacterMove = TeamUnits[CurrentTeam][0];
     }
 
     public static void StartTurn()
     {
-        CurrentTurn.passedTurn = false;
-        CurrentTurn.BeginTurn();
-        CurrentTurn.GetComponent<TacticsMove>().MoveAction();
+        SelectedCharacterMove.passedTurn = false;
+        SelectedCharacterMove.BeginTurn();
+        SelectedCharacterMove.GetComponent<TacticsMove>().MoveAction();
     }
 
     public static void EndTurn()
     {
-        CurrentTurn.distanceMoved = 0;
-        CurrentTurn.passedTurn = true;
-        CurrentTurn.EndTurn();
+        SelectedCharacterMove.distanceMoved = 0;
+        SelectedCharacterMove.passedTurn = true;
+        SelectedCharacterMove.EndTurn();
 
-        foreach (TacticsMove.TurnActions action in CurrentTurn.ActionUse.Keys.ToArray())
+        foreach (TurnActions action in SelectedCharacterMove.ActionUse.Keys.ToArray())
         {
-            CurrentTurn.ActionUse[action] = false;  
+            SelectedCharacterMove.ActionUse[action] = false;  
         }
 
         foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())
         {
             if (!unit.passedTurn)
             {
-                CurrentTurn = unit;
+                SelectedCharacterMove = unit;
                 StartTurn();
                 return;
             }
@@ -113,7 +119,7 @@ public static class TurnManager
                     TeamQueue.Enqueue(TeamQueue.Dequeue());
                 }
             }
-            if (CurrentTurn == toRemove)
+            if (SelectedCharacterMove == toRemove)
             {
                 NextTeam();
                 EndTurn();

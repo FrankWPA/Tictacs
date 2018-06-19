@@ -29,10 +29,10 @@ public class GameManager : MonoBehaviour {
                 {
                     if (!hit.collider.GetComponent<TacticsMove>().turn && !hit.collider.GetComponent<TacticsMove>().passedTurn)
                     {
-                        TurnManager.CurrentTurn.EndTurn();
+                        TurnManager.SelectedCharacterMove.EndTurn();
                         hit.collider.GetComponent<TacticsMove>().BeginTurn();
                         TacticsMove currentTm = hit.collider.GetComponent<TacticsMove>();
-                        TurnManager.CurrentTurn = currentTm;
+                        TurnManager.SelectedCharacterMove = currentTm;
                         currentTm.MoveAction();
                     }
                 }
@@ -63,23 +63,23 @@ public class GameManager : MonoBehaviour {
 
         if (follow)
         {
-            transform.position = TurnManager.CurrentTurn.transform.position + new Vector3(0, 2, 0);
+            transform.position = TurnManager.SelectedCharacterMove.transform.position + new Vector3(0, 2, 0);
         }
     }
 
     public void Move()
     {
-        TacticsMove currentTm = TurnManager.CurrentTurn.GetComponent<TacticsMove>();
+        TacticsMove currentTm = TurnManager.SelectedCharacterMove.GetComponent<TacticsMove>();
         currentTm.MoveAction();
     }
 
     public void Attack()
     {
-        Character currentChar = TurnManager.CurrentTurn.GetComponent<Character>();
-        TacticsMove currentTm = TurnManager.CurrentTurn.GetComponent<TacticsMove>();
+        Character currentChar = TurnManager.SelectedCharacterMove.GetComponent<Character>();
+        TacticsMove currentTm = TurnManager.SelectedCharacterMove.GetComponent<TacticsMove>();
         currentChar.CauseDamage(currentChar.damageTarget);
 
-        currentTm.ActionUse[currentTm.ActionCost[TacticsMove.Actions.Attack]] = true;
+        currentTm.ActionUse[currentTm.ActionCost[Actions.Attack]] = true;
     }
 
     public void EndTurn()

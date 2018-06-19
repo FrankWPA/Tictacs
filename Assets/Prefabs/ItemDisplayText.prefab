@@ -73,8 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ae68411ffea84439f94db20e3afc88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 78268b581b0f11745806116322edbe77, type: 2}
-  stack: 2
+  item: {fileID: 0}
+  stack: 0
 --- !u!222 &222265422504327150
 CanvasRenderer:
   m_ObjectHideFlags: 1

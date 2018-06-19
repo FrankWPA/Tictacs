@@ -11,6 +11,9 @@ public class Tiles : MonoBehaviour
     public bool path = false;
     public bool visited = false;
 
+    public GameObject tileIndicator;
+    public GameObject areaIndicator;
+
     public int distance = 0;
     public Tiles parent = null;
 
@@ -26,24 +29,57 @@ public class Tiles : MonoBehaviour
     {
         if (current)
         {
-            GetComponent<Renderer>().material.color = Color.magenta;
+            tileIndicator.SetActive(true);
+            
+            foreach (Transform child in tileIndicator.transform)
+            {
+                var main = child.GetComponent<ParticleSystem>().main;
+                main.startColor = new Color(0.3f, 0f, 0.5f, 1);
+
+                Input.GetButtonDown("ChangeCharacter");
+            }
         }
         else if (path)
         {
-            GetComponent<Renderer>().material.color = Color.yellow;
+            tileIndicator.SetActive(true);
+
+            foreach (Transform child in tileIndicator.transform)
+            {
+                var main = child.GetComponent<ParticleSystem>().main;
+                main.startColor = new Color(0, 0.4f, 0, 1);
+            }
         }
         else if (target)
         {
-            GetComponent<Renderer>().material.color = Color.green;
+            tileIndicator.SetActive(false);
+
+            /*foreach (Transform child in tileIndicator.transform)
+            {
+                var main = child.GetComponent<ParticleSystem>().main;
+                main.startColor = Color.green;
+            }*/
         }
         else if (selectable)
         {
-            GetComponent<Renderer>().material.color = Color.red;
+            tileIndicator.SetActive(false);
+
+            /*foreach (Transform child in tileIndicator.transform)
+            {
+                var main = child.GetComponent<ParticleSystem>().main;
+                main.startColor = Color.red;
+            }
+            */
         }
         else
         {
-            GetComponent<Renderer>().material.color = Color.white;
+            tileIndicator.SetActive(false);
         }
+
+        if (selectable)
+        {
+            if (!current) areaIndicator.SetActive(true);
+        }
+        else areaIndicator.SetActive(false);
     }
 
 	public void CheckNeighbours(GameObject checker, float halfHeight, Tiles targetC, int ResetAll)
