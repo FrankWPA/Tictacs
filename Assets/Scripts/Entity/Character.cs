@@ -167,6 +167,16 @@ public class Character : MonoBehaviour
         return newDamage;
     }
 
+    public bool GetActionState(Actions actions)
+    {
+        return ActionUse[ActionCost[actions]];
+    }
+
+    public void SetActionState(Actions actions, bool toSet)
+    {
+       ActionUse[ActionCost[actions]] = toSet;
+    }
+
     // ---------------------- Triggered Events -----------------------------
 
     public void Die()
