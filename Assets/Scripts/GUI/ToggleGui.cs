@@ -8,8 +8,6 @@ public class ToggleGui : MonoBehaviour {
     public GameObject equipment;
     public GameObject combatButtons;
 
-    public bool combatActive = true;
-
     void Update () {
 		if (Input.GetButtonDown("ToggleInv"))
         {
@@ -20,7 +18,7 @@ public class ToggleGui : MonoBehaviour {
             equipment.SetActive(!equipment.activeSelf);
             equipment.transform.Find("EquipmentPanel").GetComponent<EquipmentDisplay>().UpdateEquipment(false);
         }
-        if (combatActive != combatButtons.activeSelf)
+        if (TurnManager.combatInitialized != combatButtons.activeSelf)
         {
             combatButtons.SetActive(!combatButtons.activeSelf);
         }

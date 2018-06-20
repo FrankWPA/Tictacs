@@ -1,7 +1,22 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public class Character : MonoBehaviour {
+public class Character : MonoBehaviour
+{
+    // Sisteam de ações
+
+    public Dictionary<Actions, TurnActions> ActionCost = new Dictionary<Actions, TurnActions>() {
+        {Actions.Move,  TurnActions.Movement},
+        {Actions.Attack,  TurnActions.Default}
+    };
+
+    public Dictionary<TurnActions, bool> ActionUse = new Dictionary<TurnActions, bool>() {
+        {TurnActions.Movement, false},
+        {TurnActions.Default, false}
+    };
+
+    // Sisteam de ações
 
     public Dictionary<string, List<object[]>> triggerList = new Dictionary<string, List<object[]>>();
 
@@ -9,6 +24,7 @@ public class Character : MonoBehaviour {
 
     public Damage newDamage;
     public Character damageTarget;
+    public TacticsMove charMove;
 
     [Header("Basic Stats")]
     public new string name = "Error";
@@ -40,6 +56,8 @@ public class Character : MonoBehaviour {
 
     public void Start()
     {
+        charMove = GetComponent<TacticsMove>();
+
         // Adding Triggers
         // this.CreateTrigger("Condition", new object[] { "FunctionToBeCalled", argument0, argument1, ... argumentN});
         // The function doesn't need to exist, it still can trigger other triggers as a condition.
@@ -54,7 +72,17 @@ public class Character : MonoBehaviour {
     }
 
     public void Update() {
-        
+        if (charMove.turn)
+        {
+            foreach (TurnActions action in ActionUse.Keys.ToArray())
+            {
+                if (ActionUse[action] == false)
+                {
+                    return;
+                }
+            }
+            TurnManager.EndTurn();
+        }
     }
 
     public void CauseDamage(Character character)
@@ -191,3 +219,6 @@ public class Character : MonoBehaviour {
         }
     }
 }
+
+public enum Actions { Move, Attack }
+public enum TurnActions { Movement, Default }

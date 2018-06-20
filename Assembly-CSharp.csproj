@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Entity\Character.cs" />
     <Compile Include="Assets\Scripts\Entity\EnemyCharacter.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerCharacter.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Assets\Scripts\GUI\InventoryDisplay.cs" />
     <Compile Include="Assets\Scripts\GUI\InventoryItemText.cs" />
     <Compile Include="Assets\Scripts\GUI\ToggleGui.cs" />
+    <Compile Include="Assets\Scripts\HealthBarScript.cs" />
     <Compile Include="Assets\Scripts\Items\CraftManager.cs" />
     <Compile Include="Assets\Scripts\Items\Equipment.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Assets\Scripts\Managers\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TurnManager.cs" />
+    <Compile Include="Assets\Scripts\SelectedCharArrow.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\NpcMove.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\TacticsMove.cs" />

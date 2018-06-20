@@ -14,7 +14,7 @@ public class NpcMove : TacticsMove
 
     void Update()
     {
-        if (turn && ActionUse[ActionCost[Actions.Move]] == false)
+        if (turn && charChar.ActionUse[charChar.ActionCost[Actions.Move]] == false)
         {
             if (moving)
             {
