@@ -81,7 +81,6 @@ public class Character : MonoBehaviour
                     return;
                 }
             }
-            Debug.Log(name);
             TurnManager.EndTurn();
         }
     }

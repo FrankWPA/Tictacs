@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641258, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5976,6 +5976,11 @@ Prefab:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114418590280240310, guid: 3b6b4b6374430ff42bd976fe24978b97,
+        type: 2}
+      propertyPath: turn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3b6b4b6374430ff42bd976fe24978b97, type: 2}
   m_IsPrefabParent: 0
@@ -7088,6 +7093,11 @@ Prefab:
         type: 2}
       propertyPath: currentDodge
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114418590280240310, guid: 3b6b4b6374430ff42bd976fe24978b97,
+        type: 2}
+      propertyPath: turn
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3b6b4b6374430ff42bd976fe24978b97, type: 2}

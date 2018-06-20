@@ -814,7 +814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMoveType: 1
   angle: 0
-  turn: 1
+  turn: 0
   passedTurn: 0
   moving: 0
   moveSpeed: 10
