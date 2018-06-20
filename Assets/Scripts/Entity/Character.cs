@@ -47,11 +47,11 @@ public class Character : MonoBehaviour
 
     public int armour = 2;
 
-    //public int block = 5;
+    public int block = 5;
     public int currentBlock = 6;
     public int blockRegen = 0;
 
-    //public int dodge = 0;
+    public int dodge = 0;
     public int currentDodge = 1;
 
     public void Start()
@@ -81,6 +81,7 @@ public class Character : MonoBehaviour
                     return;
                 }
             }
+            Debug.Log(name);
             TurnManager.EndTurn();
         }
     }
