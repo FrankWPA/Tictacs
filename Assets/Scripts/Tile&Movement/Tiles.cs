@@ -82,16 +82,16 @@ public class Tiles : MonoBehaviour
         else areaIndicator.SetActive(false);
     }
 
-	public void CheckNeighbours(GameObject checker, float halfHeight, Tiles targetC, int ResetAll)
+	public void CheckNeighbours(float halfHeight, Tiles targetC, int ResetAll)
     { 
 		Reset(ResetAll);
-        CheckTile(Vector3.forward, checker, halfHeight, targetC);
-        CheckTile(-Vector3.forward, checker, halfHeight, targetC);
-        CheckTile(Vector3.left, checker, halfHeight, targetC);
-        CheckTile(-Vector3.left, checker, halfHeight, targetC);
+        CheckTile(Vector3.forward, halfHeight, targetC);
+        CheckTile(-Vector3.forward, halfHeight, targetC);
+        CheckTile(Vector3.left, halfHeight, targetC);
+        CheckTile(-Vector3.left, halfHeight, targetC);
     }
 
-    public void CheckTile(Vector3 dir, GameObject checker, float halfHeight, Tiles targetC)
+    public void CheckTile(Vector3 dir, float halfHeight, Tiles targetC)
     {
         Collider[] hitColliders = Physics.OverlapBox(transform.position + dir, halfExtents);
         foreach (Collider item in hitColliders)

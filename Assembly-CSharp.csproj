@@ -58,29 +58,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\InventoryDisplay.cs" />
-    <Compile Include="Assets\InventoryItemText.cs" />
     <Compile Include="Assets\Scripts\Entity\Character.cs" />
     <Compile Include="Assets\Scripts\Entity\EnemyCharacter.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\EventSytem\Damage.cs" />
     <Compile Include="Assets\Scripts\EventSytem\StatusEffect.cs" />
     <Compile Include="Assets\Scripts\EventSytem\Trigger.cs" />
-    <Compile Include="Assets\Scripts\Others\CameraControl.cs" />
-    <Compile Include="Assets\Scripts\Others\CraftManager.cs" />
-    <Compile Include="Assets\Scripts\Others\Equipment.cs" />
-    <Compile Include="Assets\Scripts\Others\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Others\Inventory.cs" />
-    <Compile Include="Assets\Scripts\Others\InvTest.cs" />
-    <Compile Include="Assets\Scripts\Others\Item.cs" />
-    <Compile Include="Assets\Scripts\Others\PlayerEquip.cs" />
-    <Compile Include="Assets\Scripts\Others\Recipe.cs" />
+    <Compile Include="Assets\Scripts\GUI\AttackButton.cs" />
+    <Compile Include="Assets\Scripts\GUI\EquipmentDisplay.cs" />
+    <Compile Include="Assets\Scripts\GUI\InventoryDisplay.cs" />
+    <Compile Include="Assets\Scripts\GUI\InventoryItemText.cs" />
+    <Compile Include="Assets\Scripts\GUI\ToggleGui.cs" />
+    <Compile Include="Assets\Scripts\Items\CraftManager.cs" />
+    <Compile Include="Assets\Scripts\Items\Equipment.cs" />
+    <Compile Include="Assets\Scripts\Items\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Items\InvTest.cs" />
+    <Compile Include="Assets\Scripts\Items\Item.cs" />
+    <Compile Include="Assets\Scripts\Items\PlayerEquip.cs" />
+    <Compile Include="Assets\Scripts\Items\Recipe.cs" />
+    <Compile Include="Assets\Scripts\Managers\CameraControl.cs" />
+    <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\NpcMove.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\TacticsMove.cs" />
     <Compile Include="Assets\Scripts\Tile&amp;Movement\Tiles.cs" />
-    <Compile Include="Assets\Scripts\Tile&amp;Movement\TurnManager.cs" />
-    <Compile Include="Assets\ToggleInventory.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Frank/Documents/Unity/Tictacs/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

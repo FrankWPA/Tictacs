@@ -29,10 +29,10 @@ public class GameManager : MonoBehaviour {
                 {
                     if (!hit.collider.GetComponent<TacticsMove>().turn && !hit.collider.GetComponent<TacticsMove>().passedTurn)
                     {
-                        TurnManager.SelectedCharacterMove.EndTurn();
+                        TurnManager.CurrentSelected.EndTurn();
                         hit.collider.GetComponent<TacticsMove>().BeginTurn();
                         TacticsMove currentTm = hit.collider.GetComponent<TacticsMove>();
-                        TurnManager.SelectedCharacterMove = currentTm;
+                        TurnManager.CurrentSelected = currentTm;
                         currentTm.MoveAction();
                     }
                 }
@@ -45,8 +45,7 @@ public class GameManager : MonoBehaviour {
             GetComponent<Recipe>().Craft();
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
+        if (TurnManager.UnitList.Count > 0 && !TurnManager.combatInitialized) { 
             TurnManager.InitCombat();
             follow = true;
         }
@@ -63,20 +62,14 @@ public class GameManager : MonoBehaviour {
 
         if (follow)
         {
-            transform.position = TurnManager.SelectedCharacterMove.transform.position + new Vector3(0, 2, 0);
+            transform.position = TurnManager.CurrentSelected.transform.position + new Vector3(0, 2, 0);
         }
-    }
-
-    public void Move()
-    {
-        TacticsMove currentTm = TurnManager.SelectedCharacterMove.GetComponent<TacticsMove>();
-        currentTm.MoveAction();
     }
 
     public void Attack()
     {
-        Character currentChar = TurnManager.SelectedCharacterMove.GetComponent<Character>();
-        TacticsMove currentTm = TurnManager.SelectedCharacterMove.GetComponent<TacticsMove>();
+        Character currentChar = TurnManager.CurrentSelected.GetComponent<Character>();
+        TacticsMove currentTm = TurnManager.CurrentSelected.GetComponent<TacticsMove>();
         currentChar.CauseDamage(currentChar.damageTarget);
 
         currentTm.ActionUse[currentTm.ActionCost[Actions.Attack]] = true;

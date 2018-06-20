@@ -31,7 +31,7 @@ public class NpcMove : TacticsMove
     {
         FindNearestTarget();
         CalculatePath();
-        FindSelectableTiles(1);
+        //FindSelectableTiles(1);
     }
 
     void CalculatePath()

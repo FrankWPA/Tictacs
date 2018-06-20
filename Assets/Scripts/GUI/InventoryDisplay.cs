@@ -5,8 +5,7 @@ using UnityEngine;
 public class InventoryDisplay : MonoBehaviour {
 
     public GameObject itemDisplayText;
-
-	// Use this for initialization
+    
 	void Start () {
         Inventory.inventoryDisplay = this;
 	}
@@ -22,8 +21,6 @@ public class InventoryDisplay : MonoBehaviour {
 
         int numOfItens = inv.Count;
         int numOfChilds = transform.childCount;
-
-        
 
         //Ajust children number
         if (numOfItens != numOfChilds)

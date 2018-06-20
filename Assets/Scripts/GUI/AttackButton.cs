@@ -9,17 +9,14 @@ public class AttackButton : MonoBehaviour {
 
     Button button;
 
-
-    // Use this for initialization
     void Start () {
         button = GetComponent<Button>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
-        if (TurnManager.Ready)
+        if (TurnManager.combatInitialized)
         {
-            tacticsMove = TurnManager.SelectedCharacterMove;
+            tacticsMove = TurnManager.CurrentSelected;
 
             if (!tacticsMove.ActionUse[tacticsMove.ActionCost[Actions.Attack]])
             {

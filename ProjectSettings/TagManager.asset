@@ -8,6 +8,7 @@ TagManager:
   - Npc
   - CameraBase
   - GameManager
+  - EquipPanel
   layers:
   - Default
   - TransparentFX

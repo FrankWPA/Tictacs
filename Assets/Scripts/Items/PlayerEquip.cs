@@ -6,6 +6,7 @@ public class PlayerEquip : MonoBehaviour
 {
     // Temporary
     public List<string> newTrigger;
+    EquipmentDisplay equipmentDisplay;
 
     Character character;
 
@@ -13,11 +14,14 @@ public class PlayerEquip : MonoBehaviour
 
     public void Start()
     {
+        equipmentDisplay = Resources.FindObjectsOfTypeAll<EquipmentDisplay>()[0].GetComponent<EquipmentDisplay>();
         character = GetComponent<Character>();
 
         foreach (EquipSlot slot in Enum.GetValues(typeof(EquipSlot)))
         {
-            equipList.Add(slot, null);
+            if (slot != EquipSlot.none) {
+                equipList.Add(slot, null);
+            }
         }
     }
 
@@ -78,7 +82,6 @@ public class PlayerEquip : MonoBehaviour
     Equipment CheckSlot (EquipSlot slot)
     {
         return equipList[slot];
-
     }
 
     public void Unequip(EquipSlot slot)
@@ -100,14 +103,17 @@ public class PlayerEquip : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Equip(toEquip);
-        }
+        if (GetComponent<TacticsMove>().turn) {
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                Equip(toEquip);
+                equipmentDisplay.UpdateEquipment(true);
+            }
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            ListEquipment();
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                ListEquipment();
+            }
         }
     }
 }

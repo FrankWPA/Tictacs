@@ -5,31 +5,49 @@ using UnityEngine.UI;
 
 public class InventoryItemText : MonoBehaviour {
 
+    public DisplayType displayType = DisplayType.Inventory;
     public Item item;
     public int stack = 0;
+    public string finalText;
     Text text;
-
-
-
-    // Use this for initialization
+    
     void Start() {
         text = GetComponent<Text>();
     }
 
-    // Update is called once per frame
     void Update() {
 
-        stack = Inventory.inv[item];
+        switch (displayType) {
+            case DisplayType.Inventory:
 
-        if (item == null) text.text = "";
-        else
-        {
-            string finalText = "" + stack + " x " + item.name;
+                stack = Inventory.inv[item];
+                if (item == null) text.text = "";
+                else
+                {
+                    finalText = stack + " x " + item.name;
 
-            if (stack < 10) finalText = "00" + finalText;
-            else if (stack < 100) finalText = "0" + finalText;
+                    if (stack < 10) finalText = "00" + finalText;
+                    else if (stack < 100) finalText = "0" + finalText;
 
-            text.text = finalText;
+                    text.text = finalText;
+                }
+                break;
+
+            case DisplayType.Equipment:
+
+                if (item == null) text.text = "";
+                else
+                {
+                    text.text = finalText + ": " + item.name;
+                }
+
+                    break;
         }
+        
     }
+}
+
+public enum DisplayType
+{
+    Inventory, Equipment
 }
