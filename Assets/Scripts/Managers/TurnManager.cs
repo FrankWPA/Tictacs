@@ -123,9 +123,9 @@ public static class TurnManager
         CurrentSelected.passedTurn = true;
         CurrentSelected.EndTurn();
 
-        foreach (TurnActions action in CurrentSelected.charChar.ActionUse.Keys.ToArray())
+        foreach (Actions action in CurrentSelected.charChar.ActionCost.Keys.ToArray())
         {
-            CurrentSelected.charChar.ActionUse[action] = false;  
+            CurrentSelected.charChar.SetActionState(action, false);
         }
 
         foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())

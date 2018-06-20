@@ -18,7 +18,7 @@ public class AttackButton : MonoBehaviour {
         {
             tacticsMove = TurnManager.CurrentSelected;
 
-            if (!tacticsMove.charChar.ActionUse[tacticsMove.charChar.ActionCost[Actions.Attack]])
+            if (!tacticsMove.charChar.GetActionState(Actions.Attack))
             {
                 button.interactable = true;
                 return;

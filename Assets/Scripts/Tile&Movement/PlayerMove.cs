@@ -18,7 +18,7 @@ public class PlayerMove : TacticsMove
 
     void Update()
     {
-        if (turn && charChar.GetActionState(Actions.Move))
+        if (turn && !charChar.GetActionState(Actions.Move))
         {
             if (!moving)
             {

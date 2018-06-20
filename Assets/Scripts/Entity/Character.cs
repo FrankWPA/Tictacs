@@ -12,8 +12,8 @@ public class Character : MonoBehaviour
     };
 
     public Dictionary<TurnActions, bool> ActionUse = new Dictionary<TurnActions, bool>() {
-        {TurnActions.Movement, false},
-        {TurnActions.Default, false}
+        {TurnActions.Movement, true},
+        {TurnActions.Default, true}
     };
 
     // Sisteam de ações
@@ -167,14 +167,14 @@ public class Character : MonoBehaviour
         return newDamage;
     }
 
-    public bool GetActionState(Actions actions)
+    public bool GetActionState(Actions action)
     {
-        return ActionUse[ActionCost[actions]];
+        return ActionUse[ActionCost[action]];
     }
 
-    public void SetActionState(Actions actions, bool toSet)
+    public void SetActionState(Actions action, bool toSet)
     {
-       ActionUse[ActionCost[actions]] = toSet;
+       ActionUse[ActionCost[action]] = toSet;
     }
 
     // ---------------------- Triggered Events -----------------------------
