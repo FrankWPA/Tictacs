@@ -8,6 +8,7 @@ public class HealthBarScript : MonoBehaviour {
     public Character character;
     public Slider healthSlider;
     public Slider blockSlider;
+    public Slider dodgeSlider;
     public Image barBorder;
 
 	// Use this for initialization
@@ -24,6 +25,9 @@ public class HealthBarScript : MonoBehaviour {
 
         blockSlider.maxValue = character.block;
         blockSlider.value = character.currentBlock;
+
+        dodgeSlider.maxValue = character.dodge;
+        dodgeSlider.value = character.currentDodge;
 
         if (!character.GetActionState(Actions.Attack)) barBorder.color = Color.yellow;
         else barBorder.color = Color.black;
