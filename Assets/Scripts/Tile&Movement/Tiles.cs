@@ -27,59 +27,67 @@ public class Tiles : MonoBehaviour
 
     void Update()
     {
-        if (current)
+        if (TurnManager.CurrentTeam == "Player")
         {
-            tileIndicator.SetActive(true);
-            
-            foreach (Transform child in tileIndicator.transform)
+            if (current)
             {
-                var main = child.GetComponent<ParticleSystem>().main;
-                main.startColor = new Color(0.3f, 0f, 0.5f, 1);
+                tileIndicator.SetActive(true);
 
-                Input.GetButtonDown("ChangeCharacter");
+                foreach (Transform child in tileIndicator.transform)
+                {
+                    var main = child.GetComponent<ParticleSystem>().main;
+                    main.startColor = new Color(0.3f, 0f, 0.5f, 1);
+
+                    Input.GetButtonDown("ChangeCharacter");
+                }
             }
-        }
-        else if (path)
-        {
-            tileIndicator.SetActive(true);
-
-            foreach (Transform child in tileIndicator.transform)
+            else if (path)
             {
-                var main = child.GetComponent<ParticleSystem>().main;
-                main.startColor = new Color(0, 0.4f, 0, 1);
+                tileIndicator.SetActive(true);
+
+                foreach (Transform child in tileIndicator.transform)
+                {
+                    var main = child.GetComponent<ParticleSystem>().main;
+                    main.startColor = new Color(0, 0.4f, 0, 1);
+                }
             }
-        }
-        else if (target)
-        {
-            tileIndicator.SetActive(false);
-
-            /*foreach (Transform child in tileIndicator.transform)
+            else if (target)
             {
-                var main = child.GetComponent<ParticleSystem>().main;
-                main.startColor = Color.green;
-            }*/
-        }
-        else if (selectable)
-        {
-            tileIndicator.SetActive(false);
+                tileIndicator.SetActive(false);
 
-            /*foreach (Transform child in tileIndicator.transform)
-            {
-                var main = child.GetComponent<ParticleSystem>().main;
-                main.startColor = Color.red;
+                /*foreach (Transform child in tileIndicator.transform)
+                {
+                    var main = child.GetComponent<ParticleSystem>().main;
+                    main.startColor = Color.green;
+                }*/
             }
-            */
+            else if (selectable)
+            {
+                tileIndicator.SetActive(false);
+
+                /*foreach (Transform child in tileIndicator.transform)
+                {
+                    var main = child.GetComponent<ParticleSystem>().main;
+                    main.startColor = Color.red;
+                }
+                */
+            }
+            else
+            {
+                tileIndicator.SetActive(false);
+            }
+
+            if (selectable)
+            {
+                if (!current) areaIndicator.SetActive(true);
+            }
+            else areaIndicator.SetActive(false);
         }
         else
         {
             tileIndicator.SetActive(false);
+            areaIndicator.SetActive(false);
         }
-
-        if (selectable)
-        {
-            if (!current) areaIndicator.SetActive(true);
-        }
-        else areaIndicator.SetActive(false);
     }
 
 	public void CheckNeighbours(float halfHeight, Tiles targetC, int ResetAll)
