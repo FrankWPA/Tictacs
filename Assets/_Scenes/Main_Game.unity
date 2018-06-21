@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641258, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1351,7 +1351,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1768354425580480, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_Name
@@ -1391,6 +1391,11 @@ Prefab:
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
+        type: 2}
+      propertyPath: currentBlock
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
@@ -2019,7 +2024,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114918780741003902, guid: c979a0b8f74f7fb4dba47c12dca9f2a1,
         type: 2}
@@ -2497,9 +2502,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1271458194}
+  - {fileID: 758309883}
   - {fileID: 1881356859}
   - {fileID: 311400605}
-  - {fileID: 758309883}
   - {fileID: 1433522646}
   m_Father: {fileID: 713270827}
   m_RootOrder: 0
@@ -5371,7 +5376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454e134add9a99949bdd9636bf239111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newTrigger: []
+  newTrigger:
+  - atk_damageTrigger
+  - DeathTouch
   toEquip: {fileID: 11400000, guid: d1e0f2b403c0ddd4bb273bd9748636c6, type: 2}
 --- !u!23 &1397467460
 MeshRenderer:
@@ -6398,7 +6405,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4257787193082628, guid: 3b6b4b6374430ff42bd976fe24978b97, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1762747998367260, guid: 3b6b4b6374430ff42bd976fe24978b97, type: 2}
       propertyPath: m_Name
@@ -6453,6 +6460,10 @@ Prefab:
         type: 2}
       propertyPath: turn
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762747998367260, guid: 3b6b4b6374430ff42bd976fe24978b97, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3b6b4b6374430ff42bd976fe24978b97, type: 2}

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
+        TurnManager.gm = this;
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         cameraBase = GameObject.FindGameObjectWithTag("CameraBase");
     }
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour {
                         hit.collider.GetComponent<TacticsMove>().BeginTurn();
                         TacticsMove currentTm = hit.collider.GetComponent<TacticsMove>();
                         TurnManager.CurrentSelected = currentTm;
+                        currentTm.BeginTurn();
                         currentTm.MoveAction();
                     }
                 }
@@ -45,7 +47,7 @@ public class GameManager : MonoBehaviour {
             GetComponent<Recipe>().Craft();
         }
 
-        if (TurnManager.UnitList.Count > 0 && !TurnManager.combatInitialized) { 
+        if (TurnManager.UnitList.Count > 0 && !TurnManager.combatInitialized) {
             TurnManager.InitCombat();
             follow = true;
         }
@@ -77,6 +79,11 @@ public class GameManager : MonoBehaviour {
 
     public void EndTurn()
     {
-        TurnManager.EndTurn();
+        TurnManager.CurrentSelected.EndTurn();
+        TurnManager.NextTeam();
+    }
+
+    public void FalseDebug (string a){
+        Debug.Log(a);
     }
 }

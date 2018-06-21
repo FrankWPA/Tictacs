@@ -12,10 +12,10 @@ public class Character : MonoBehaviour
     };
 
     public Dictionary<TurnActions, bool> ActionUse = new Dictionary<TurnActions, bool>() {
-        {TurnActions.Movement, true},
-        {TurnActions.Default, true}
+        {TurnActions.Movement, false},
+        {TurnActions.Default, false}
     };
-
+    
     // Sisteam de ações
 
     public Dictionary<string, List<object[]>> triggerList = new Dictionary<string, List<object[]>>();
@@ -65,13 +65,14 @@ public class Character : MonoBehaviour
         //this.CreateTrigger("atk_dodgeTrigger", new object[] { "Critical"});
         //this.CreateTrigger("atk_blockTrigger", new object[] { "Critical", 1});
         
-        //this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "pTarget", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
+        this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "pTarget", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
 
         //this.CreateTrigger("def_attackTrigger", new object[] { "UpdateStatus" });
         this.CreateTrigger("def_deathTrigger", new object[] { "Die" });
     }
 
     public void Update() {
+
         if (charMove.turn)
         {
             foreach (TurnActions action in ActionUse.Keys.ToArray())
@@ -87,20 +88,23 @@ public class Character : MonoBehaviour
 
     public void CauseDamage(Character character)
     {
-        newDamage = new Damage
+        if (character != null)
         {
-            actor = this,
-            target = character,
-            damage = this.baseDamage,
-            critModifier = this.critModifier,
-            armourPierce = this.armourPierce,
-            canBeDodged = true,
-            canBeBlocked = true,
-            triggerList = this.triggerList,
-        };
+            newDamage = new Damage
+            {
+                actor = this,
+                target = character,
+                damage = this.baseDamage,
+                critModifier = this.critModifier,
+                armourPierce = this.armourPierce,
+                canBeDodged = true,
+                canBeBlocked = true,
+                triggerList = this.triggerList,
+            };
 
-        //Debug.Log("Total damage: " + character.TakeDamage (newDamage).damage);
-        character.TakeDamage(newDamage);
+            //Debug.Log("Total damage: " + character.TakeDamage (newDamage).damage);
+            character.TakeDamage(newDamage);
+        }
     }
 
     public Damage TakeDamage(Damage receivedDamage)
@@ -174,14 +178,17 @@ public class Character : MonoBehaviour
 
     public void SetActionState(Actions action, bool toSet)
     {
-       ActionUse[ActionCost[action]] = toSet;
+
+        //Debug.Log(name + " " + action + " set to " + toSet);
+        ActionUse[ActionCost[action]] = toSet;
     }
 
     // ---------------------- Triggered Events -----------------------------
 
+    [ContextMenu("Die")]
     public void Die()
     {
-        this.GetComponent<TacticsMove>().RemoveUnit();
+         this.GetComponent<TacticsMove>().RemoveUnit();
         GameObject.Destroy(this.gameObject);
     }
 
@@ -196,6 +203,11 @@ public class Character : MonoBehaviour
             // On Crit - critTrigger
             this.CallCombatEvents("critTrigger");
         }
+    }
+
+    public void DeathTouch()
+    {
+        newDamage.target.Die();
     }
 
     public void ApplyStatus(Character statusTarget, EffectType effectType, int turnDuration, object[] toApply)

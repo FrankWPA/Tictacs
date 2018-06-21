@@ -14,15 +14,24 @@ public class NpcMove : TacticsMove
 
     void Update()
     {
-        if (turn && !charChar.GetActionState(Actions.Move))
+        if (turn)
         {
-            if (moving)
+            if (!charChar.GetActionState(Actions.Move))
             {
-                MoveSelection();
+                if (moving)
+                {
+                    MoveSelection();
+                }
+                else
+                {
+                    MoveAction();
+                }
             }
-            else
+
+            if (!charChar.GetActionState(Actions.Attack))
             {
-                MoveAction();
+                charChar.CauseDamage(charChar.damageTarget);
+                charChar.SetActionState(Actions.Attack, true);
             }
         }
     }
