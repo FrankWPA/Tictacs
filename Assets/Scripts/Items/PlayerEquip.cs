@@ -10,6 +10,8 @@ public class PlayerEquip : MonoBehaviour
 
     Character character;
 
+    public Equipment[] toEquip = new Equipment[4];
+
     public Dictionary<EquipSlot, Equipment> equipList = new Dictionary<EquipSlot, Equipment>();
 
     public void Start()
@@ -99,14 +101,16 @@ public class PlayerEquip : MonoBehaviour
         }
     }
 
-    public Equipment toEquip;
-
     public void Update()
     {
         if (GetComponent<TacticsMove>().turn) {
             if (Input.GetKeyDown(KeyCode.U))
             {
-                Equip(toEquip);
+                foreach(Equipment equip in toEquip)
+                {
+                    Equip(equip);
+                }
+                
                 equipmentDisplay.UpdateEquipment(true);
             }
 

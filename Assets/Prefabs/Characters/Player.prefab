@@ -1113,7 +1113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newTrigger: []
-  toEquip: {fileID: 11400000, guid: d1e0f2b403c0ddd4bb273bd9748636c6, type: 2}
+  toEquip: []
 --- !u!136 &136955433881626040
 CapsuleCollider:
   m_ObjectHideFlags: 1
