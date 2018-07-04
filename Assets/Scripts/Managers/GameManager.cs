@@ -71,10 +71,7 @@ public class GameManager : MonoBehaviour {
     public void Attack()
     {
         Character currentChar = TurnManager.CurrentSelected.GetComponent<Character>();
-        TacticsMove currentTm = TurnManager.CurrentSelected.GetComponent<TacticsMove>();
-        currentChar.CauseDamage(currentChar.damageTarget);
-
-        currentTm.charChar.SetActionState(Actions.Attack, true);
+        currentChar.CauseDamage();
     }
 
     public void EndTurn()

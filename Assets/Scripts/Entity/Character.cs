@@ -65,7 +65,7 @@ public class Character : MonoBehaviour
         //this.CreateTrigger("atk_dodgeTrigger", new object[] { "Critical"});
         //this.CreateTrigger("atk_blockTrigger", new object[] { "Critical", 1});
         
-        this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "pTarget", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
+        //this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "pTarget", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
 
         //this.CreateTrigger("def_attackTrigger", new object[] { "UpdateStatus" });
         this.CreateTrigger("def_deathTrigger", new object[] { "Die" });
@@ -86,24 +86,33 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void CauseDamage(Character character)
+    public void CauseDamage()
     {
-        if (character != null)
-        {
-            newDamage = new Damage
-            {
-                actor = this,
-                target = character,
-                damage = this.baseDamage,
-                critModifier = this.critModifier,
-                armourPierce = this.armourPierce,
-                canBeDodged = true,
-                canBeBlocked = true,
-                triggerList = this.triggerList,
-            };
+        charMove.FindNearestTarget();
 
-            //Debug.Log("Total damage: " + character.TakeDamage (newDamage).damage);
-            character.TakeDamage(newDamage);
+        if (charMove.targetUnit != null)
+        {
+            Vector3 a = new Vector3(1, 0, 1);
+            if (Vector3.Distance(Vector3.Scale(transform.position, a), Vector3.Scale(charMove.targetUnit.transform.position, a)) <= 1)
+            {
+                Character character = charMove.targetUnit.GetComponent<Character>();
+
+                newDamage = new Damage
+                {
+                    actor = this,
+                    target = character,
+                    damage = this.baseDamage,
+                    critModifier = this.critModifier,
+                    armourPierce = this.armourPierce,
+                    canBeDodged = true,
+                    canBeBlocked = true,
+                    triggerList = this.triggerList,
+                };
+
+                //Debug.Log("Total damage: " + character.TakeDamage (newDamage).damage);
+                character.TakeDamage(newDamage);
+                SetActionState(Actions.Attack, true);
+            }
         }
     }
 

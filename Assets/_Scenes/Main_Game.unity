@@ -1323,15 +1323,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1396,6 +1396,10 @@ Prefab:
         type: 2}
       propertyPath: currentBlock
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768354425580480, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
@@ -1996,15 +2000,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -11
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4077,15 +4081,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4761157274121120, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4150,6 +4154,10 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1768354425580480, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c979a0b8f74f7fb4dba47c12dca9f2a1, type: 2}
@@ -4847,7 +4855,7 @@ MonoBehaviour:
   charMove: {fileID: 1397467457}
   name: "Per\xE1grajo"
   hp: 5
-  currentHp: 5
+  currentHp: 20
   movement: 4
   Str: 1
   Int: 1
@@ -4871,7 +4879,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1397467456}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 11}
+  m_LocalPosition: {x: 0, y: 2, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 43606976}
@@ -5332,6 +5340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff9cff77357547a49a56aa757617eb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetUnit: {fileID: 0}
   currentMoveType: 1
   angle: 0
   turn: 0
@@ -5376,9 +5385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454e134add9a99949bdd9636bf239111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newTrigger:
-  - atk_damageTrigger
-  - DeathTouch
+  newTrigger: []
   toEquip: {fileID: 11400000, guid: d1e0f2b403c0ddd4bb273bd9748636c6, type: 2}
 --- !u!23 &1397467460
 MeshRenderer:
@@ -6414,22 +6421,22 @@ Prefab:
     - target: {fileID: 224125406601635048, guid: 3b6b4b6374430ff42bd976fe24978b97,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224125406601635048, guid: 3b6b4b6374430ff42bd976fe24978b97,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224699286417249422, guid: 3b6b4b6374430ff42bd976fe24978b97,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224699286417249422, guid: 3b6b4b6374430ff42bd976fe24978b97,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114960917637019256, guid: 3b6b4b6374430ff42bd976fe24978b97,
         type: 2}
@@ -6444,12 +6451,12 @@ Prefab:
     - target: {fileID: 224516959808550270, guid: 3b6b4b6374430ff42bd976fe24978b97,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224516959808550270, guid: 3b6b4b6374430ff42bd976fe24978b97,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224495841138841344, guid: 3b6b4b6374430ff42bd976fe24978b97,
         type: 2}
@@ -6463,7 +6470,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1762747998367260, guid: 3b6b4b6374430ff42bd976fe24978b97, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3b6b4b6374430ff42bd976fe24978b97, type: 2}

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NpcMove : TacticsMove
 {
-    public GameObject targetUnit;
 
     void Start()
     {
@@ -28,10 +27,10 @@ public class NpcMove : TacticsMove
                 }
             }
 
-            if (!charChar.GetActionState(Actions.Attack))
+            else if (!charChar.GetActionState(Actions.Attack))
             {
-                charChar.CauseDamage(charChar.damageTarget);
-                charChar.SetActionState(Actions.Attack, true);
+                charChar.CauseDamage();
+                TurnManager.EndTurn();
             }
         }
     }
@@ -39,17 +38,27 @@ public class NpcMove : TacticsMove
     public override void MoveAction()
     {
         FindNearestTarget();
-        CalculatePath();
+        if (targetUnit != null)
+        {
+            CalculatePath();
+        }
+        else
+        {
+            charChar.SetActionState(Actions.Move, true);
+        }
         //FindSelectableTiles(1);
     }
 
     void CalculatePath()
     {
         Tiles targetTile = GetTargetTile(targetUnit);
-        FindPath(targetTile);
+        if (!FindPath(targetTile))
+        {
+            charChar.SetActionState(Actions.Move, true);
+        }
     }
 
-    void FindNearestTarget()
+    public override void FindNearestTarget()
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag("Player");
 
