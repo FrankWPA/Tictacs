@@ -16,7 +16,7 @@ public class ToggleGui : MonoBehaviour {
         if (Input.GetButtonDown("ToggleEquip"))
         {
             equipment.SetActive(!equipment.activeSelf);
-            equipment.transform.Find("EquipmentPanel").GetComponent<EquipmentDisplay>().UpdateEquipment(false);
+            equipment.transform.Find("EquipmentPanel").GetComponent<EquipmentDisplay>().UpdateEquipment(true);
         }
         if (TurnManager.combatInitialized != combatButtons.activeSelf)
         {

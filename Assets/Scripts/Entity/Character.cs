@@ -23,7 +23,6 @@ public class Character : MonoBehaviour
     public List<StatusEffect> StatusEffectList = new List<StatusEffect>();
 
     public Damage newDamage;
-    public Character damageTarget;
     public TacticsMove charMove;
 
     [Header("Basic Stats")]
@@ -39,6 +38,21 @@ public class Character : MonoBehaviour
     public int Int = 1;
     public int Agi = 1;
     public int Des = 1;
+
+    public Dictionary<string, int> secondaryAtributes = new Dictionary<string, int>();
+
+    public List<object> secondaryAtributes2 = new List<object>()
+    {
+        "baseDamage", 1,
+        "critModifier", 0,
+        "armourPierce", 0,
+        "armour", 0,
+        "block", 0,
+        "currentBlock", 0,
+        "blockRegen", 0,
+        "dodge", 0,
+        "currentDodge", 1,
+    };
 
     [Header("Secondary Attributes")]
     public int baseDamage = 2;
@@ -64,11 +78,12 @@ public class Character : MonoBehaviour
 
         //this.CreateTrigger("atk_dodgeTrigger", new object[] { "Critical"});
         //this.CreateTrigger("atk_blockTrigger", new object[] { "Critical", 1});
-        
+
         //this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "pTarget", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
 
         //this.CreateTrigger("def_attackTrigger", new object[] { "UpdateStatus" });
-        this.CreateTrigger("def_deathTrigger", new object[] { "Die" });
+        this.CreateTrigger("atk_deathTrigger", new object[] { "Die" });
+        this.CreateTrigger("deathTrigger", new object[] { "Die" });
     }
 
     public void Update() {
@@ -169,7 +184,7 @@ public class Character : MonoBehaviour
             currentHp -= Mathf.Max(newDamage.damage, 0);
 
             if (currentHp <= 0) {
-                // On Killing/Dying - DeathTrigger
+                // On Killing/Dying - deathTrigger
                 this.CallCombatEvents("deathTrigger");
             }
             return newDamage;
@@ -197,8 +212,8 @@ public class Character : MonoBehaviour
     [ContextMenu("Die")]
     public void Die()
     {
-         this.GetComponent<TacticsMove>().RemoveUnit();
-        GameObject.Destroy(this.gameObject);
+        GetComponent<TacticsMove>().RemoveUnit();
+        Destroy(gameObject);
     }
 
     public void Critical()

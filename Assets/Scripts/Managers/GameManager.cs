@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-
+    public EquipmentDisplay equipmentDisplay;
     public GameObject cameraBase;
     public Camera cam;
 
@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
+        equipmentDisplay = Resources.FindObjectsOfTypeAll<EquipmentDisplay>()[0].GetComponent<EquipmentDisplay>();
         TurnManager.gm = this;
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         cameraBase = GameObject.FindGameObjectWithTag("CameraBase");
@@ -36,6 +37,11 @@ public class GameManager : MonoBehaviour {
                         TurnManager.CurrentSelected = currentTm;
                         currentTm.BeginTurn();
                         currentTm.MoveAction();
+
+                        if (equipmentDisplay.isActiveAndEnabled)
+                        {
+                            equipmentDisplay.UpdateEquipment(true);
+                        }
                     }
                 }
             }

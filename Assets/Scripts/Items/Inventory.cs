@@ -17,7 +17,6 @@ public static class Inventory
         inv.Add(item, ammount);
 
         if (inventoryDisplay != null) inventoryDisplay.UpdateInventory();
-        else Debug.Log("Inventory Display null!");
 
         return;
     }

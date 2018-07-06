@@ -5,6 +5,7 @@ using UnityEngine;
 public class Equipment : Item
 {
     public List<object[]> StatusTriggerList = new List<object[]>();
+    public List<string> newTrigger = new List<string>();
 
     public EquipSlot slot = EquipSlot.none;
     public bool twoHanded = false;
@@ -22,7 +23,7 @@ public class Equipment : Item
         character.blockRegen += blockRegen;
         character.armour += armour;
         character.armourPierce += armourPirerce;
-        
+
         StatusTriggerList.ApplyTrigger(character);
     }
 

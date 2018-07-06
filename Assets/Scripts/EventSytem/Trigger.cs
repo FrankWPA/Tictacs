@@ -30,7 +30,6 @@ public static class Trigger
         {
             foreach (object[] trigger in eventList[eventName])
             {
-
                 object[] args = new object[trigger.Length - 1];
                 Type[] types = new Type[trigger.Length - 1];
 
@@ -46,7 +45,22 @@ public static class Trigger
                 }
                 else
                 {
-                    target.EventTrigger(eventList, (string)trigger[0]);
+                    string comp = trigger[0].ToString().Substring(0, 4);
+
+                    if (comp == "atk_")
+                    {
+                        target.EventTrigger(eventList, (string)trigger[0]);
+                    }
+                    else if (comp == "def_")
+                    {
+                        target.newDamage.target.EventTrigger(eventList, (string)trigger[0]);
+                    }
+                    else
+                    {
+                        target.EventTrigger(eventList, (string)trigger[0]);
+                        (target.newDamage.actor == target ? target.newDamage.target : target)
+                            .EventTrigger(eventList, "res_" + (string)trigger[0]);
+                    }
                 }
             }
         }
@@ -109,7 +123,6 @@ public static class Trigger
                             return;
                         }
                     }
-
                 }
             }
         }

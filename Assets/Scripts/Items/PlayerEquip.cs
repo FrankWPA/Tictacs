@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor;
 
 public class PlayerEquip : MonoBehaviour
 {
     // Temporary
-    public List<string> newTrigger;
+    //public List<string> newTrigger;
     EquipmentDisplay equipmentDisplay;
 
     Character character;
 
-    public Equipment[] toEquip = new Equipment[4];
+    public List<Equipment> toEquip = new List<Equipment>();
 
     public Dictionary<EquipSlot, Equipment> equipList = new Dictionary<EquipSlot, Equipment>();
 
@@ -66,17 +67,15 @@ public class PlayerEquip : MonoBehaviour
     void ApplyEquip(Equipment equipment)
     {
         equipList[equipment.slot] = equipment;
-
-        // Temporary
-        if (newTrigger.Count > 0)
+        
+        if (equipment.newTrigger.Count > 0)
         {
-            equipment.StatusTriggerList.Add(new object[newTrigger.Count]);
-            for (int i = 0; i < newTrigger.Count; i++)
+            equipment.StatusTriggerList.Add(new object[equipment.newTrigger.Count]);
+            for (int i = 0; i < equipment.newTrigger.Count; i++)
             {
-                equipment.StatusTriggerList[0][i] = newTrigger[i];
+                equipment.StatusTriggerList[0][i] = equipment.newTrigger[i];
             }
         }
-        // Temporary
 
         equipment.OnEquip(character);
     }
@@ -103,21 +102,16 @@ public class PlayerEquip : MonoBehaviour
 
     public void Update()
     {
-        if (GetComponent<TacticsMove>().turn) {
-            if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            foreach (Equipment equip in toEquip)
             {
-                foreach(Equipment equip in toEquip)
-                {
-                    Equip(equip);
-                }
-                
-                equipmentDisplay.UpdateEquipment(true);
+                Equipment newEquip = Instantiate(equip);
+
+                Equip(newEquip);
             }
 
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                ListEquipment();
-            }
+            equipmentDisplay.UpdateEquipment(true);
         }
     }
 }
