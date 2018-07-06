@@ -250,12 +250,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4257787193082628}
+  - component: {fileID: 114960917637019256}
+  - component: {fileID: 114986209599777752}
+  - component: {fileID: 114418590280240310}
   - component: {fileID: 33666511115452738}
   - component: {fileID: 136955433881626040}
   - component: {fileID: 23439677941160748}
-  - component: {fileID: 114418590280240310}
-  - component: {fileID: 114960917637019256}
-  - component: {fileID: 114986209599777752}
   - component: {fileID: 54671502159952930}
   m_Layer: 0
   m_Name: Player
@@ -812,6 +812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff9cff77357547a49a56aa757617eb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetUnit: {fileID: 0}
   currentMoveType: 1
   angle: 0
   turn: 0
@@ -1081,26 +1082,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f3fc1ec5556db469e3b14b9758a054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageTarget: {fileID: 0}
-  charMove: {fileID: 114418590280240310}
-  name: "Per\xE1grajo"
+  charMove: {fileID: 0}
+  name: Error
   hp: 5
   currentHp: 5
   movement: 4
   Str: 1
   Int: 1
-  Agi: 6
+  Agi: 1
   Des: 1
   baseDamage: 1
   critModifier: 2
   armourPierce: 0
-  armour: 0
-  block: 5
-  currentBlock: 5
+  armour: 1
+  block: 1
+  currentBlock: 1
   blockRegen: 0
-  dodge: 0
-  currentDodge: 0
-  classToApply: 19
+  dodge: 1
+  currentDodge: 1
+  classToApply: 0
 --- !u!114 &114986209599777752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1112,7 +1112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454e134add9a99949bdd9636bf239111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newTrigger: []
   toEquip: []
 --- !u!136 &136955433881626040
 CapsuleCollider:

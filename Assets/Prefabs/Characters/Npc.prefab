@@ -253,11 +253,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4761157274121120}
+  - component: {fileID: 114918780741003902}
+  - component: {fileID: 114917739303002052}
   - component: {fileID: 33543619951988972}
   - component: {fileID: 136997715424234016}
   - component: {fileID: 23696985792350156}
-  - component: {fileID: 114917739303002052}
-  - component: {fileID: 114918780741003902}
   - component: {fileID: 54881669229027194}
   m_Layer: 0
   m_Name: Npc
@@ -1005,6 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74d07bcd8cc16944b1a454193710351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetUnit: {fileID: 0}
   currentMoveType: 0
   angle: 0
   turn: 0
@@ -1019,7 +1020,6 @@ MonoBehaviour:
   halfHeight: 0
   actualTargetTile: {fileID: 0}
   TilesChecked: 0
-  targetUnit: {fileID: 0}
 --- !u!114 &114918780741003902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1031,26 +1031,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6ad38e94f14b04ebdfc69c06bdd47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageTarget: {fileID: 0}
   charMove: {fileID: 0}
-  name: Zombie
-  hp: 3
-  currentHp: 3
-  movement: 3
+  name: Error
+  hp: 5
+  currentHp: 5
+  movement: 4
   Str: 1
-  Int: 0
-  Agi: 0
-  Des: 0
+  Int: 1
+  Agi: 1
+  Des: 1
   baseDamage: 1
-  critModifier: 0
+  critModifier: 2
   armourPierce: 0
-  armour: 0
-  block: 5
-  currentBlock: 0
+  armour: 1
+  block: 1
+  currentBlock: 1
   blockRegen: 0
-  dodge: 0
-  currentDodge: 0
-  enemyPressetToApply: 1
+  dodge: 1
+  currentDodge: 1
+  enemyPressetToApply: 0
 --- !u!114 &114927548979649258
 MonoBehaviour:
   m_ObjectHideFlags: 1

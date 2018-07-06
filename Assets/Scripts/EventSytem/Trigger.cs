@@ -20,12 +20,13 @@ public static class Trigger
 
     public static void CallCombatEvents(this Character caller, string eventName)
     {
-        caller.newDamage.actor.EventTrigger(caller.newDamage.triggerList, ("atk_" + eventName));
-        caller.newDamage.target.EventTrigger(caller.newDamage.target.triggerList, ("def_" + eventName));
+        caller.EventTrigger((caller.newDamage.actor == caller ?
+            caller.newDamage.actorTriggerList : caller.newDamage.targetTriggerList), (eventName), true);
     }
 
-    public static void EventTrigger(this Character target, Dictionary<string, List<object[]>> eventList, string eventName)
+    public static void EventTrigger(this Character target, Dictionary<string, List<object[]>> eventList, string eventName, bool reactive)
     {
+
         if (eventList.ContainsKey(eventName))
         {
             foreach (object[] trigger in eventList[eventName])
@@ -39,28 +40,23 @@ public static class Trigger
                     types[i - 1] = args[i - 1].GetType();
                 }
 
+                if (reactive && trigger[0].ToString().Contains("oth_"))
+                {
+                    target = (target.newDamage.actor == target ? target.newDamage.target : target);
+                    trigger[0] = trigger[0].ToString().Remove(0, 4);
+                }
+
                 if (target.GetType().GetMethod((string)trigger[0], types) != null)
                 {
+                    if (reactive)
+                    {
+                        (target.newDamage.actor == target ? target.newDamage.target : target).CallCombatEvents("res_" + eventName);
+                    }
                     target.InvokeStringMethod((string)trigger[0], args, types);
                 }
-                else
+                else if (trigger[0].ToString().Substring(0, 4) != "res_")
                 {
-                    string comp = trigger[0].ToString().Substring(0, 4);
-
-                    if (comp == "atk_")
-                    {
-                        target.EventTrigger(eventList, (string)trigger[0]);
-                    }
-                    else if (comp == "def_")
-                    {
-                        target.newDamage.target.EventTrigger(eventList, (string)trigger[0]);
-                    }
-                    else
-                    {
-                        target.EventTrigger(eventList, (string)trigger[0]);
-                        (target.newDamage.actor == target ? target.newDamage.target : target)
-                            .EventTrigger(eventList, "res_" + (string)trigger[0]);
-                    }
+                    target.EventTrigger(eventList, (string)trigger[0], reactive);
                 }
             }
         }

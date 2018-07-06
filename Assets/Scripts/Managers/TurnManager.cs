@@ -29,6 +29,9 @@ public static class TurnManager
     {
         TeamUnits.Clear();
         TeamQueue.Clear();
+        CurrentSelected = null;
+        CurrentTeam = null;
+
         combatInitialized = QueueReady = false;
     }
 
@@ -58,7 +61,7 @@ public static class TurnManager
 
         CurrentTeam = TeamQueue.Peek();
         CurrentSelected = TeamUnits[CurrentTeam][0];
-        StartTurn();
+        PrepareTeam();
     }
 
     public static void AddUnit(this TacticsMove toAdd)
@@ -87,16 +90,24 @@ public static class TurnManager
             {
                 TeamUnits.Remove(toRemove.tag);
 
-                while (TeamQueue.Peek() != toRemove.tag)
+                if (toRemove.tag == CurrentTeam)
                 {
-                    TeamQueue.Enqueue(TeamQueue.Dequeue());
+                    TeamQueue.Dequeue();
                 }
-
-                TeamQueue.Dequeue();
-
-                while (TeamQueue.Peek() != CurrentTeam)
+                else
                 {
-                    TeamQueue.Enqueue(TeamQueue.Dequeue());
+                    while (TeamQueue.Peek() != toRemove.tag)
+                    {
+                        TeamQueue.Enqueue(TeamQueue.Dequeue());
+                    }
+
+                    TeamQueue.Dequeue();
+
+                    while (TeamQueue.Peek() != CurrentTeam)
+                    {
+
+                        TeamQueue.Enqueue(TeamQueue.Dequeue());
+                    }
                 }
             }
             if (CurrentSelected == toRemove)
@@ -106,29 +117,48 @@ public static class TurnManager
         }
     }
 
-    public static void NextTeam()
+    public static void PrepareTeam()
     {
-        foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())
-        {
-            unit.charChar.SetActionState(Actions.Move, true);
-            unit.charChar.SetActionState(Actions.Attack, true);
-        }
-
-        if (CurrentTeam == "Player") TurnButtonActive = false;
-
-        TeamQueue.Enqueue(TeamQueue.Dequeue());
-        CurrentTeam = TeamQueue.Peek();
-        CurrentSelected = TeamUnits[CurrentTeam][0];
-
         foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())
         {
             unit.charChar.SetActionState(Actions.Move, false);
             unit.charChar.SetActionState(Actions.Attack, false);
             unit.passedTurn = false;
             unit.distanceMoved = 0;
+            unit.charChar.StartTurn();
         }
 
         StartTurn();
+    }
+
+    public static void NextTeam()
+    {
+        if (TeamUnits.ContainsKey(CurrentTeam))
+        {
+            foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())
+            {
+                unit.charChar.EndTurn();
+                unit.charChar.SetActionState(Actions.Move, true);
+                unit.charChar.SetActionState(Actions.Attack, true);
+            }
+        }
+
+        if (CurrentTeam == "Player") TurnButtonActive = false;
+
+        if (TeamQueue.Contains(CurrentTeam))
+        {
+            TeamQueue.Enqueue(TeamQueue.Dequeue());
+        }
+        else if (TeamQueue.Count == 0) {
+            EndCombat();
+            return;
+        }
+
+        CurrentTeam = TeamQueue.Peek();
+        CurrentSelected = TeamUnits[CurrentTeam][0];
+
+        PrepareTeam();
+
         if (CurrentTeam == "Player") TurnButtonActive = true;
     }
 
@@ -143,19 +173,22 @@ public static class TurnManager
         CurrentSelected.passedTurn = true;
         CurrentSelected.EndTurn();
 
-       foreach (Actions action in CurrentSelected.charChar.ActionCost.Keys.ToArray())
+        if (TeamUnits.ContainsKey(CurrentTeam))
         {
-            CurrentSelected.charChar.SetActionState(action, true);
+            foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())
+            {
+                if (!unit.passedTurn)
+                {
+                    CurrentSelected = unit;
+                    StartTurn();
+                    return;
+                }
+            }
         }
 
-        foreach (TacticsMove unit in TeamUnits[CurrentTeam].ToArray())
+        foreach (Actions action in CurrentSelected.charChar.ActionCost.Keys.ToArray())
         {
-            if (!unit.passedTurn)
-            {
-                CurrentSelected = unit;
-                StartTurn();
-                return;
-            }
+            CurrentSelected.charChar.SetActionState(action, true);
         }
 
         NextTeam();

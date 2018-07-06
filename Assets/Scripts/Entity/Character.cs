@@ -21,10 +21,11 @@ public class Character : MonoBehaviour
     public Dictionary<string, List<object[]>> triggerList = new Dictionary<string, List<object[]>>();
 
     public List<StatusEffect> StatusEffectList = new List<StatusEffect>();
-
+    
     public Damage newDamage;
+    Character other;
     public TacticsMove charMove;
-
+    
     [Header("Basic Stats")]
     public new string name = "Error";
     public int hp = 5;
@@ -39,33 +40,18 @@ public class Character : MonoBehaviour
     public int Agi = 1;
     public int Des = 1;
 
-    public Dictionary<string, int> secondaryAtributes = new Dictionary<string, int>();
-
-    public List<object> secondaryAtributes2 = new List<object>()
-    {
-        "baseDamage", 1,
-        "critModifier", 0,
-        "armourPierce", 0,
-        "armour", 0,
-        "block", 0,
-        "currentBlock", 0,
-        "blockRegen", 0,
-        "dodge", 0,
-        "currentDodge", 1,
-    };
-
     [Header("Secondary Attributes")]
-    public int baseDamage = 2;
+    public int baseDamage = 1;
     public int critModifier = 2;
-    public int armourPierce = 1;
+    public int armourPierce = 0;
 
-    public int armour = 2;
+    public int armour = 1;
 
-    public int block = 5;
-    public int currentBlock = 6;
+    public int block = 1;
+    public int currentBlock = 1;
     public int blockRegen = 0;
 
-    public int dodge = 0;
+    public int dodge = 1;
     public int currentDodge = 1;
 
     public void Start()
@@ -82,8 +68,8 @@ public class Character : MonoBehaviour
         //this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "pTarget", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
 
         //this.CreateTrigger("def_attackTrigger", new object[] { "UpdateStatus" });
-        this.CreateTrigger("atk_deathTrigger", new object[] { "Die" });
         this.CreateTrigger("deathTrigger", new object[] { "Die" });
+        this.CreateTrigger("res_deathTrigger", new object[] { "Die" });
     }
 
     public void Update() {
@@ -99,6 +85,18 @@ public class Character : MonoBehaviour
             }
             TurnManager.EndTurn();
         }
+    }
+
+    public void StartTurn()
+    {
+        this.EventTrigger(triggerList, "startTurnTrigger", false);
+
+        currentBlock = Mathf.Min(block, currentBlock + blockRegen);
+    }
+
+    public void EndTurn()
+    {
+        this.EventTrigger(triggerList, "endTurnTrigger", false);
     }
 
     public void CauseDamage()
@@ -121,7 +119,8 @@ public class Character : MonoBehaviour
                     armourPierce = this.armourPierce,
                     canBeDodged = true,
                     canBeBlocked = true,
-                    triggerList = this.triggerList,
+                    actorTriggerList = this.triggerList,
+                    targetTriggerList = character.triggerList,
                 };
 
                 //Debug.Log("Total damage: " + character.TakeDamage (newDamage).damage);
@@ -134,9 +133,10 @@ public class Character : MonoBehaviour
     public Damage TakeDamage(Damage receivedDamage)
     {
         newDamage = receivedDamage;
+        other = newDamage.actor;
 
         //On Resolving an Hit - attackTrigger
-        this.CallCombatEvents("attackTrigger");
+        other.CallCombatEvents("attackTrigger");
 
         if (newDamage.canBeDodged && currentDodge > 0)
         {
@@ -149,7 +149,7 @@ public class Character : MonoBehaviour
         }
 
         // On resolving an undodged Hit - hitTrigger
-        this.CallCombatEvents("hitTrigger");
+        other.CallCombatEvents("hitTrigger");
 
         if (newDamage.canBeBlocked && currentBlock > 0)
         {
@@ -165,7 +165,7 @@ public class Character : MonoBehaviour
         if (newDamage.damage > 0)
         {
             // On Resolving unblocked damage - connectTrigger
-            this.CallCombatEvents("connectTrigger");
+            other.CallCombatEvents("connectTrigger");
 
             if (armour > newDamage.armourPierce)
             {
@@ -178,7 +178,7 @@ public class Character : MonoBehaviour
             if (newDamage.damage > 0)
             {
                 // On Dealing/Taking Damage - damageTrigger
-                this.CallCombatEvents("damageTrigger");
+                other.CallCombatEvents("damageTrigger");
             }
 
             currentHp -= Mathf.Max(newDamage.damage, 0);
@@ -202,8 +202,6 @@ public class Character : MonoBehaviour
 
     public void SetActionState(Actions action, bool toSet)
     {
-
-        //Debug.Log(name + " " + action + " set to " + toSet);
         ActionUse[ActionCost[action]] = toSet;
     }
 
@@ -212,7 +210,7 @@ public class Character : MonoBehaviour
     [ContextMenu("Die")]
     public void Die()
     {
-        GetComponent<TacticsMove>().RemoveUnit();
+        charMove.RemoveUnit();
         Destroy(gameObject);
     }
 
@@ -225,7 +223,7 @@ public class Character : MonoBehaviour
             newDamage.hasCrited = true;
 
             // On Crit - critTrigger
-            this.CallCombatEvents("critTrigger");
+            other.CallCombatEvents("critTrigger");
         }
     }
 
