@@ -65,11 +65,10 @@ public class Character : MonoBehaviour
         //this.CreateTrigger("atk_dodgeTrigger", new object[] { "Critical"});
         //this.CreateTrigger("atk_blockTrigger", new object[] { "Critical", 1});
 
-        //this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "pTarget", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
+        //this.CreateTrigger("atk_dodgeTrigger", new object[] { "ApplyStatus", "#Target", EffectType.Debuff, 2, new object[] { "def_damageTrigger", "Critical" } });
 
         //this.CreateTrigger("def_attackTrigger", new object[] { "UpdateStatus" });
         this.CreateTrigger("deathTrigger", new object[] { "Die" });
-        this.CreateTrigger("res_deathTrigger", new object[] { "Die" });
     }
 
     public void Update() {
@@ -105,7 +104,8 @@ public class Character : MonoBehaviour
 
         if (charMove.targetUnit != null)
         {
-            Vector3 a = new Vector3(1, 0, 1);
+            Vector3 a;
+            a = (Mathf.Abs( transform.position.y - charMove.targetUnit.transform.position.y) <= 1) ? new Vector3(1, 0, 1) : new Vector3(1, 1, 1);
             if (Vector3.Distance(Vector3.Scale(transform.position, a), Vector3.Scale(charMove.targetUnit.transform.position, a)) <= 1)
             {
                 Character character = charMove.targetUnit.GetComponent<Character>();

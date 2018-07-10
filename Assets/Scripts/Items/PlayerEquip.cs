@@ -5,9 +5,7 @@ using UnityEditor;
 
 public class PlayerEquip : MonoBehaviour
 {
-    // Temporary
-    //public List<string> newTrigger;
-    EquipmentDisplay equipmentDisplay;
+    //EquipmentDisplay equipmentDisplay;
 
     Character character;
 
@@ -15,9 +13,11 @@ public class PlayerEquip : MonoBehaviour
 
     public Dictionary<EquipSlot, Equipment> equipList = new Dictionary<EquipSlot, Equipment>();
 
+    bool autoEquip = false;
+
     public void Start()
     {
-        equipmentDisplay = Resources.FindObjectsOfTypeAll<EquipmentDisplay>()[0].GetComponent<EquipmentDisplay>();
+        //equipmentDisplay = Resources.FindObjectsOfTypeAll<EquipmentDisplay>()[0].GetComponent<EquipmentDisplay>();
         character = GetComponent<Character>();
 
         foreach (EquipSlot slot in Enum.GetValues(typeof(EquipSlot)))
@@ -100,10 +100,12 @@ public class PlayerEquip : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.U))
+        if (!autoEquip)
         {
+            
+            autoEquip = true;
             foreach (Equipment equip in toEquip)
             {
                 Equipment newEquip = Instantiate(equip);
@@ -111,7 +113,7 @@ public class PlayerEquip : MonoBehaviour
                 Equip(newEquip);
             }
 
-            equipmentDisplay.UpdateEquipment(true);
+            //equipmentDisplay.UpdateEquipment(true);
         }
     }
 }

@@ -15,10 +15,9 @@ public static class Trigger
         {
             caller.triggerList.Add(keyTriggerList, new List<object[]> { trigger });
         }
-        //Debug.Log(keyTriggerList + ": " + caller.triggerList[keyTriggerList][0][0]);
     }
 
-    public static void CallCombatEvents(this Character caller, string eventName)
+    public static void CallCombatEvents(this Character caller, string eventName, bool reactive = true)
     {
         caller.EventTrigger((caller.newDamage.actor == caller ?
             caller.newDamage.actorTriggerList : caller.newDamage.targetTriggerList), (eventName), true);
@@ -26,6 +25,7 @@ public static class Trigger
 
     public static void EventTrigger(this Character target, Dictionary<string, List<object[]>> eventList, string eventName, bool reactive)
     {
+        
 
         if (eventList.ContainsKey(eventName))
         {
@@ -45,12 +45,12 @@ public static class Trigger
                     target = (target.newDamage.actor == target ? target.newDamage.target : target);
                     trigger[0] = trigger[0].ToString().Remove(0, 4);
                 }
-
+                
                 if (target.GetType().GetMethod((string)trigger[0], types) != null)
                 {
                     if (reactive)
                     {
-                        (target.newDamage.actor == target ? target.newDamage.target : target).CallCombatEvents("res_" + eventName);
+                        (target.newDamage.actor == target ? target.newDamage.target : target).CallCombatEvents("res_" + eventName, false);
                     }
                     target.InvokeStringMethod((string)trigger[0], args, types);
                 }
@@ -70,10 +70,9 @@ public static class Trigger
 
     public static object VarParser(this Character target, object variable)
     {
-        //Debug.Log("Parsing '" + variable.ToString() + "'");
         switch (variable.ToString())
         {
-            case "pTarget": return target.newDamage.target;
+            case "#Target": return target.newDamage.target;
             default: return variable;
         }
     }

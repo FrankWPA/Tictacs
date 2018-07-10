@@ -83,6 +83,7 @@ public static class TurnManager
     {
         UnitList.Remove(toRemove);
 
+        // fix bug later
         if (TeamUnits[toRemove.tag].Contains(toRemove))
         {
             TeamUnits[toRemove.tag].Remove(toRemove);
